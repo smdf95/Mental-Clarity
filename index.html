@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <title>Mental Clarity Home</title>
+</head>
+<body>
+    <script>
+        // This function is called when the page is loaded. It is just a short animation where the logo smaller and the margin around the div is shortened
+        setTimeout(() => {
+            const logo = document.getElementById('logo');
+            
+            logo.classList.remove("initial-size");
+            logo.classList.add("smaller-size");
+        }, 2000);
+    </script>
+
+    <div id="header">
+        <a href="index.html" class="logo-link">
+            <img src="images/logo.png">
+        </a>
+        <nav>
+            <a href="index.html" class="current_page">Home</a>
+            <a href="todo.html">To Do List</a>
+            <a href="journal.html">Journal</a>
+            <a href="meditation.html">Meditation</a>
+            <a href="benefits.html">Benefits</a>
+        </nav>
+    </div>
+    <div class="container">
+        <img src="images/big_logo.png" id="logo" class="initial-size">
+    </div>
+</body>
+</html>

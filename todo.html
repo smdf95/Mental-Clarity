@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <title>To Do Lists</title>
+    
+</head>
+<body>
+    <div id="header">
+        <a href="index.html" class="logo-link">
+            <img src="images/logo.png">
+        </a>
+        <nav>
+            <a href="index.html">Home</a>
+            <a class="current_page">To Do List</a>
+            <a href="journal.html">Journal</a>
+            <a href="meditation.html">Meditation</a>
+            <a href="benefits.html">Benefits</a>
+        </nav>
+    </div>
+    <div class="container">
+        <h1>To Do List</h1>
+        <div class="todo_list">
+            <div class="inputTask">
+                <input type="text" id="newTask" placeholder="Add Task">
+                <button type="button" onclick="addTask()" id="addButton">Add</button>
+            </div>
+            <div class="list">
+                <ul>
+
+
+                </ul>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

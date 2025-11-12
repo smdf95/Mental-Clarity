@@ -1,0 +1,545 @@
+/* ============================================== */
+/* ============== GENERAL STYLING =============== */
+/* ============================================== */
+
+:root {
+    --container-bg: #FFFFFF;
+    --primary-text: #333333;
+    --secondary-text: #4a4e69;
+    --accent-color: #FF5F6D; 
+    --button-primary: #FF5F6D; 
+    --button-primary-light: #FFC371; 
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    font-family: 'Poppins', Arial, sans-serif;
+    box-sizing: border-box;
+}
+
+body {
+    width: 100%;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #FF5F6D, #FFC371); 
+    overflow-y: scroll; 
+}
+
+
+/* ============================================== */
+/* ============== HEADER AND NAV ================ */
+/* ============================================== */
+
+/* ============================================== */
+/* ============== HEADER AND NAV ================ */
+/* ============================================== */
+
+/* Main Header Container */
+#header {
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    height: 80px;
+    padding: 0 5%;
+    background-color: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px); 
+    z-index: 1000;
+}
+
+/* Logo in navbar */
+#header .logo-link {
+    position: absolute;
+    left: 40px;
+    margin: 0;
+    text-decoration: none;
+}
+
+#header img {
+    height: 50px;
+    cursor: pointer;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+#header img:hover {
+    transform: scale(1.05);
+}
+
+/* Navigation Links Container */
+#header nav {
+    display: flex;
+    align-items: center;
+    gap: 30px; 
+}
+
+#header nav a {
+    position: relative;
+    color: var(--secondary-text);
+    padding: 8px 0;
+    border-radius: 0;
+    text-decoration: none;
+    transition: color 0.3s ease, border-bottom 0.3s ease;
+    font-size: 1em;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+#header nav a:hover {
+    color: var(--accent-color);
+    background: transparent;
+}
+
+#header nav a.current_page {
+    color: var(--primary-text); 
+    font-weight: 700;
+    cursor: default;
+}
+
+/* Indicator for current page on nav bar */
+#header nav a.current_page::after { 
+    content: ""; 
+    position: absolute;
+    bottom: 5px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background-color: var(--accent-color);
+    border-radius: 2px;
+}
+
+
+/* ============================================== */
+/* ================= CONTAINER ================== */
+/* ============================================== */
+
+.container {
+    max-width: 1000px;
+    margin: 60px auto;
+    padding: 0 20px 60px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.container h1{
+    text-align: center;
+    margin: 0 0 20px;
+    color: #000000;
+    font-size: 2.5em;
+}
+
+
+/* ============================================== */
+/* ================ HOME PAGE =================== */
+/* ============================================== */
+
+/* Logo animation */
+.initial-size {
+    height: 700px;
+}
+
+.smaller-size {
+    height: 350px;
+    transition: 0.7s ease-in;
+}
+
+/* ============================================== */
+/* ============== TO DO LIST PAGE =============== */
+/* ============================================== */
+
+
+/* To do list container */
+.todo_list {
+    width: 100%;
+    max-width: 540px;
+    background: var(--container-bg);
+    margin: 30px auto 50px;
+    padding: 25px 30px;
+    border-radius: 18px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.todo_list > * {
+    color: #333333;
+}
+
+.todo_list h2 {
+    margin: 0 0 20px 10px;
+    font-size: 1.5em;
+    text-align: left;
+}
+
+/* Input field for adding tasks */
+.inputTask {
+    width: 100%;
+    display: flex;
+    border-radius: 40px;
+    background-color: #edeff6;
+    margin-top: 20px;
+}
+
+.inputTask > * {
+    border: none;
+    outline: none;
+    border-radius: 40px;
+}
+
+.inputTask input {
+    flex: 1;
+    background: transparent;
+    padding: 10px 30px;
+    font-weight: 400;
+    font-size: 16px;
+}
+
+.inputTask input:focus {
+    outline: none;
+}
+
+.inputTask input::placeholder {
+    width: 100%;
+    background: transparent;
+    color: #555555;
+}
+
+/* Add task button */
+.inputTask button {
+    background-color: #ff5945;
+    padding: 16px 50px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    color: white;
+    transition: 0.2s ease-out;
+}
+
+.inputTask button:hover {
+    background-color: #d64c3c;  
+    transition: 0.2s ease-in;
+}
+
+/* List of tasks */
+.list {
+    padding: 15px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 100%;
+}
+
+.list li {
+    list-style: none;
+    font-size: 17px;
+    padding: 12px 8px 12px 50px;
+    color: #333;
+    cursor: pointer;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    word-break: break-word;
+    text-align: left;
+}
+
+.list li .task-text {
+    flex: 1;
+    word-break: break-word;
+}
+
+/* Material Symbols for Checkbox */
+.list li::before{
+    content: 'radio_button_unchecked'; /* Default unchecked icon */
+    position: absolute;
+    height: 28px;
+    width: 28px;
+    left: 8px;
+
+    color: #999;
+    font-family: 'Material Symbols Outlined';
+    font-size: 24px;
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+li.checked .task-text {
+    color: #AAAAAA;
+    text-decoration: line-through;
+}
+
+li.checked::before {
+    content: 'check_circle'; /* Checked icon */
+    color: var(--accent-color); /* Highlight color for checked */
+    font-variation-settings: 'FILL' 1;
+}
+
+.list span {
+    color: #AAAAAA;
+    flex-shrink: 0;
+    margin-left: 10px;
+    transition: 0.1s ease-out;
+    font-size: 20px;
+}
+
+.list span:hover {
+    color: #9e0404;
+    transition: 0.1s ease-in;
+}
+
+
+/* ============================================== */
+/* ================ JOURNAL PAGE ================ */
+/* ============================================== */
+
+/* Add journal button */
+.add-journal-btn {
+    padding: 12px 25px;
+    background: linear-gradient(90deg, 
+                rgb(255, 255, 255, 0.6), 
+                rgb(255, 255, 255, 0.8), 
+                rgb(255, 255, 255, 0.6));
+    border: none;
+    border-radius: 30px;
+    color: var(--primary-text);
+    font-weight: 600; 
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(255, 95, 109, 0.4);
+    margin-bottom: 20px;
+    transition: all 0.2s ease-out;
+}
+
+.add-journal-btn:hover {
+    transform: scale(1.03);
+    background: linear-gradient( 
+                rgb(255, 255, 255, 0.8), 
+                rgb(255, 255, 255, 0.8));
+    box-shadow: 0 8px 25px rgba(255, 95, 109, 0.7);
+    filter: brightness(1.1);
+    transition: all 0.1s ease-in;
+}
+
+/* Dialog for journal entry */
+#journalDialog {
+    border: none;
+    padding: 0;
+    margin: auto;
+    max-width: 90vw;
+    width: 500px; 
+    background-color: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+#journalDialog::backdrop {
+    background-color: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(3px);
+}
+
+/* Content of dialog box */
+.dialog-content {
+    padding: 25px;
+}
+
+.dialog-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee; /* Separator line */
+    margin-bottom: 20px;
+}
+
+.dialog-title {
+    color: #333; /* Dark color for readability */
+    font-size: 1.5em;
+    font-weight: 600;
+}
+
+/* Close Button at the top of dialog */
+.close-btn {
+    background: transparent;
+    border: none;
+    font-size: 1.5em;
+    color: #888;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+    transition: color 0.2s;
+}
+
+.close-btn:hover {
+    color: #FF5945; /* Matches your accent color */
+}
+
+/* Form Elements */
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #4A4E69;
+}
+
+.form-textarea {
+    width: 100%;
+    min-height: 150px;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    resize: vertical;
+    box-sizing: border-box;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-textarea:focus {
+    outline: none;
+    border-color: #FF5F6D; 
+    box-shadow: 0 0 0 3px rgba(255, 95, 109, 0.2);
+}
+
+/* Buttons at the bottom of the Dialog box */
+.dialog-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding-top: 15px;
+}
+
+.cancel-btn, .save-btn {
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s, opacity 0.2s;
+    border: none;
+}
+
+.cancel-btn {
+    background-color: #f0f0f0;
+    color: #4A4E69;
+    border: 1px solid #ddd;
+}
+
+.cancel-btn:hover {
+    background-color: #e0e0e0;
+}
+
+.save-btn {
+    background: linear-gradient(90deg, #FF5F6D, #FFC371); 
+    color: var(--primary-text); /* Use dark text for contrast on the bright gradient */
+}
+
+.save-btn:hover {
+    opacity: 0.9;
+    box-shadow: 0 2px 5px rgba(255, 95, 109, 0.5);
+}
+
+/* Journal Entries */
+
+/* Layout for journal entries */
+#journal {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin-top: 40px;
+    padding-bottom: 50px;
+    text-align: left;
+    width: 100%;
+}
+
+/* Journal cards design */
+.journal-entry-card {
+    background-color: var(--container-bg);
+    padding: 25px 30px;
+    border-radius: 18px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.journal-entry-card:hover {
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+}
+
+.card-date {
+    font-size: 0.85em;
+    font-weight: 600;
+    color: #7f8c8d;
+    border-bottom: 1px solid #f0f0f0;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.card-content {
+    flex-grow: 1;
+    font-size: 1.05em;
+    line-height: 1.6;
+    color: var(--primary-text);
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    margin-bottom: 15px;
+    font-family: 'Inter', sans-serif;
+}
+
+/* Buttons for editing or deleting entry */
+.journal-entry-card .card-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.journal-entry-card .card-actions button {
+    cursor: pointer;
+    padding: 5px;
+    border: none;
+    background: none;
+    transition: color 0.2s, transform 0.1s;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.journal-entry-card .card-actions .material-symbols-outlined {
+    font-size: 1.5em;
+    font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24;
+}
+
+.edit-card-btn .material-symbols-outlined {
+    color: #4A4E69;
+}
+
+.edit-card-btn:hover .material-symbols-outlined {
+    color: #000000;
+    font-variation-settings: 'FILL' 1;
+    transform: scale(1.15);
+}
+
+.delete-card-btn .material-symbols-outlined {
+    color: var(--accent-color);
+}
+
+.delete-card-btn:hover .material-symbols-outlined {
+    color: #E74C3C;
+    font-variation-settings: 'FILL' 1;
+    transform: scale(1.15);
+}

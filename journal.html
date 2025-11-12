@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <title>Journal</title>
+    <script src="script.js" defer></script>
+</head>
+<body>
+    
+    <div id="header">
+        <a href="index.html" class="logo-link">
+            <img src="images/logo.png">
+        </a>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="todo.html">To Do List</a>
+            <a class="current_page">Journal</a>
+            <a href="meditation.html">Meditation</a>
+            <a href="benefits.html">Benefits</a>
+        </nav>
+    </div>
+    <div class="container">
+        <h1>Journal</h1>
+        <button class="add-journal-btn" onclick="openDialog()">+ Add Entry</button>
+        <div id="journal" class="journal-entries">
+
+        </div>
+        <dialog id="journalDialog">
+            <div class="dialog-content">
+                <div class="dialog-header">
+                    <h2 class="dialog-title" id="dialogTitle">Add New Journal Entry</h2>
+                    <button class="close-btn" onclick="closeDialog()">x</button>
+                </div>
+                <form id="dialogForm">
+                    <div class="form-group">
+                        <label for="journalContent" class="form-label">Entry</label>
+                        <textarea id="journalContent" class="form-textarea" placeholder="Reflect on how you are feeling here..." required></textarea>
+                    </div>
+                    <div class="dialog-actions">
+                        <button type="button" class="cancel-btn" onclick="closeDialog()">Cancel</button>
+                        <button type="submit" class="save-btn">Save Entry</button>
+                    </div>
+                </form>
+            </div>
+        </dialog>
+        
+    </div>
+</body>
+</html>
