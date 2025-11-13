@@ -25,7 +25,6 @@ body {
     overflow-y: scroll; 
 }
 
-
 /* ============================================== */
 /* ============== HEADER AND NAV ================ */
 /* ============================================== */
@@ -139,7 +138,7 @@ body {
 
 /* Logo animation */
 .initial-size {
-    height: 700px;
+    height: 80vh;
 }
 
 .smaller-size {
@@ -220,6 +219,30 @@ body {
 .inputTask button:hover {
     background-color: #d64c3c;  
     transition: 0.2s ease-in;
+}
+
+/* Styling for the error message itself */
+.error-message {
+    display: block; 
+    color: #ff3860;
+    margin-top: 5px;
+    height: 1.2em;
+    font-size: 0.9em;
+}
+
+/* Shake animation for the error */
+@keyframes shake {
+    0% { transform: translateX(0); }
+    20% { transform: translateX(-4px); }
+    40% { transform: translateX(4px); }
+    60% { transform: translateX(-4px); }
+    80% { transform: translateX(4px); }
+    100% { transform: translateX(0); }
+}
+
+.shake-animation {
+    animation: shake 0.5s;
+    animation-fill-mode: forwards; 
 }
 
 /* List of tasks */

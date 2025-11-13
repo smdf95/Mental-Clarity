@@ -62,9 +62,57 @@ function editJournalEntry(buttonElement) {
     openDialog(true, currentContent);
 }
 
+function saveTaskData(){
+    const list = document.querySelector('.list');
+    if (list) {
+        localStorage.setItem("data", list.innerHTML);
+    }
+}
+
+function addTask() {
+    const list = document.querySelector('.list');
+    const newTaskInput = document.getElementById('newTask');
+    const errorDisplay = document.getElementById('taskError');
+
+    // Ensure elements exist and input isn't empty
+    if (!list || !newTaskInput || !errorDisplay) return;
+
+    if(newTaskInput.value.trim() === ''){
+        errorDisplay.textContent = 'Please enter a task.';
+        errorDisplay.classList.add('shake-animation');
+        
+        // 3. Remove the shake class after 0.5s 
+        //    (matching the CSS animation duration)
+        setTimeout(() => {
+            errorDisplay.classList.remove('shake-animation');
+        }, 500); // 500 milliseconds = 0.5 seconds
+        
+        // 4. Stop execution
+        return;
+    }
+    
+    let li = document.createElement('li');
+    
+    let taskTextDiv = document.createElement('div');
+    taskTextDiv.classList.add('task-text');
+    taskTextDiv.innerHTML = newTaskInput.value;
+    li.appendChild(taskTextDiv);
+
+    let span = document.createElement('span');
+    span.classList.add('material-symbols-outlined')
+    span.innerHTML = "delete_forever";
+    li.appendChild(span);
+
+    list.appendChild(li);
+    
+    errorDisplay.textContent = '';
+    newTaskInput.value = "";
+    saveTaskData(); // Use the global/accessible save function
+}
+
 
 document.addEventListener('DOMContentLoaded', function() {
-    
+
     // =================================================================
     // ===================== TO-DO LIST LOGIC ==========================
     // =================================================================
@@ -74,55 +122,18 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Check if the unique To-Do list elements exist
     if (list && newTask) {
-        
-        // Save data
-        function saveData(){
-            localStorage.setItem("data", list.innerHTML);
-        }
-        
+                
         // Retrieve and display data
         function showTasks(){
             list.innerHTML = localStorage.getItem("data") || '';
         }
         
-        // --- Action Functions ---
-        function addTask() {
-            if(newTask.value.trim() === ''){
-                console.error("Please make sure you have entered a task in the text field.");
-                return; 
-            }
-            
-            let li = document.createElement('li');
-            
-            let taskTextDiv = document.createElement('div');
-            taskTextDiv.classList.add('task-text');
-            taskTextDiv.innerHTML = newTask.value;
-            li.appendChild(taskTextDiv);
-
-            let span = document.createElement('span');
-            span.classList.add('material-symbols-outlined')
-            span.innerHTML = "delete_forever";
-            li.appendChild(span);
-
-            list.appendChild(li);
-            
-            newTask.value = "";
-            saveData(); 
-        }
-        
-        // --- Event Listeners ---
-
-        // Event listener for Enter key on the input field
+        // The event listener for 'Enter' now calls the global addTask
         newTask.addEventListener("keypress", function(event) {
             if (event.key === "Enter") {
                 event.preventDefault();
-                // Attempt to click the button, fallback to calling addTask
-                const addButton = document.getElementById("addButton");
-                if (addButton) {
-                    addButton.click();
-                } else {
-                    addTask();
-                }
+                // Call the globally defined addTask
+                addTask(); 
             }
         });
 
@@ -137,14 +148,14 @@ document.addEventListener('DOMContentLoaded', function() {
             if (targetElement.tagName === "LI" || targetElement.classList.contains('task-text')) {
                 if (listItem) {
                     listItem.classList.toggle("checked");
-                    saveData();
+                    saveTaskData(); // Use global/accessible save function
                 }
             }
             // Delete: If the SPAN (icon) is clicked
             else if(targetElement.tagName === "SPAN"){
                 if (listItem) {
                     listItem.remove();
-                    saveData();
+                    saveTaskData(); // Use global/accessible save function
                 }
             }
         }, false);
