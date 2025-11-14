@@ -69,98 +69,169 @@ function saveTaskData(){
     }
 }
 
+let draggedItem = null;
+
+// --- Drag and Drop Handlers---
+
+function handleDragStart(e) {
+    draggedItem = this;
+    e.dataTransfer.effectAllowed = 'move';
+    setTimeout(() => this.classList.add('dragging'), 0);
+}
+
+function handleDragEnd(e) {
+    this.classList.remove('dragging');
+    draggedItem = null;
+    saveTaskData();
+}
+
+function handleDragOver(e) {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'move';
+}
+
+function handleDragEnter(e) {
+    this.classList.add('drag-over');
+}
+
+function handleDragLeave(e) {
+    const relatedTarget = e.relatedTarget;
+
+    if (this !== relatedTarget && !this.contains(relatedTarget)) {
+        this.classList.remove('drag-over');
+    }
+}
+
+function handleDrop(e) {
+    e.preventDefault();
+    this.classList.remove('drag-over');
+
+    const targetItem = this;
+
+    if (draggedItem !== targetItem) {
+        const list = document.querySelector('.list');
+        const items = Array.from(list.querySelectorAll('li'));
+        const draggedIndex = items.indexOf(draggedItem);
+        const targetIndex = items.indexOf(targetItem);
+
+        if (draggedIndex > targetIndex) {
+            list.insertBefore(draggedItem, targetItem);
+        } else {
+            list.insertBefore(draggedItem, targetItem.nextSibling);
+        }
+        saveTaskData(); // Save after successful reorder
+    }
+}
+
+// --- Function to Attach Listeners to a Single Item ---
+function attachDragListeners(li) {
+    li.draggable = true;
+    li.addEventListener('dragstart', handleDragStart);
+    li.addEventListener('dragover', handleDragOver);
+    li.addEventListener('dragenter', handleDragEnter);
+    li.addEventListener('dragleave', handleDragLeave);
+    li.addEventListener('dragend', handleDragEnd);
+    li.addEventListener('drop', handleDrop);
+}
+
+
+// --- Function to Create and Add a New Task Element ---
+function createTaskElement(taskText) {
+    let li = document.createElement('li');
+    attachDragListeners(li); // Attach listeners here
+
+    let dragHandle = document.createElement('img');
+    dragHandle.src = "images/drag_handle.png";
+    dragHandle.alt = "Drag Handle";
+    dragHandle.classList.add('drag-handle'); 
+    li.appendChild(dragHandle);
+    
+    let taskTextDiv = document.createElement('div');
+    taskTextDiv.classList.add('task-text');
+    taskTextDiv.innerHTML = taskText;
+    li.appendChild(taskTextDiv);
+
+
+    let span = document.createElement('span');
+    span.classList.add('material-symbols-outlined', 'delete-icon');
+    span.innerHTML = "delete_forever";
+    li.appendChild(span);
+    
+    return li;
+}
+
+
+// --- Function to Handle Adding a Task via Input ---
 function addTask() {
     const list = document.querySelector('.list');
     const newTaskInput = document.getElementById('newTask');
     const errorDisplay = document.getElementById('taskError');
 
-    // Ensure elements exist and input isn't empty
     if (!list || !newTaskInput || !errorDisplay) return;
 
     if(newTaskInput.value.trim() === ''){
         errorDisplay.textContent = 'Please enter a task.';
         errorDisplay.classList.add('shake-animation');
-        
-        // 3. Remove the shake class after 0.5s 
-        //    (matching the CSS animation duration)
         setTimeout(() => {
             errorDisplay.classList.remove('shake-animation');
-        }, 500); // 500 milliseconds = 0.5 seconds
-        
-        // 4. Stop execution
+        }, 500);
         return;
     }
     
-    let li = document.createElement('li');
-    
-    let taskTextDiv = document.createElement('div');
-    taskTextDiv.classList.add('task-text');
-    taskTextDiv.innerHTML = newTaskInput.value;
-    li.appendChild(taskTextDiv);
-
-    let span = document.createElement('span');
-    span.classList.add('material-symbols-outlined')
-    span.innerHTML = "delete_forever";
-    li.appendChild(span);
-
-    list.appendChild(li);
+    const newTaskElement = createTaskElement(newTaskInput.value);
+    list.appendChild(newTaskElement);
     
     errorDisplay.textContent = '';
     newTaskInput.value = "";
-    saveTaskData(); // Use the global/accessible save function
+    saveTaskData();
 }
 
 
 document.addEventListener('DOMContentLoaded', function() {
-
-    // =================================================================
-    // ===================== TO-DO LIST LOGIC ==========================
-    // =================================================================
     
     const list = document.querySelector('.list');
     const newTask = document.getElementById('newTask');
     
-    // Check if the unique To-Do list elements exist
     if (list && newTask) {
-                
-        // Retrieve and display data
+        
+        // --- Revised showTasks function ---
         function showTasks(){
-            list.innerHTML = localStorage.getItem("data") || '';
+            // Load saved HTML string
+            const savedData = localStorage.getItem("data") || '';
+            list.innerHTML = savedData;
+
+            // CRITICAL STEP: Re-attach listeners to the loaded elements
+            const existingItems = list.querySelectorAll('li');
+            existingItems.forEach(item => {
+                attachDragListeners(item);
+            });
         }
         
-        // The event listener for 'Enter' now calls the global addTask
         newTask.addEventListener("keypress", function(event) {
             if (event.key === "Enter") {
                 event.preventDefault();
-                // Call the globally defined addTask
-                addTask(); 
+                addTask();
             }
         });
 
-        // Event listener for task checking and deletion
         list.addEventListener("click", function(e){
             let targetElement = e.target;
-            let listItem;
-
-            listItem = targetElement.closest('li');
+            let listItem = targetElement.closest('li');
             
-            // Check/Uncheck: If LI itself OR the task-text DIV is clicked
             if (targetElement.tagName === "LI" || targetElement.classList.contains('task-text')) {
                 if (listItem) {
                     listItem.classList.toggle("checked");
-                    saveTaskData(); // Use global/accessible save function
+                    saveTaskData();
                 }
             }
-            // Delete: If the SPAN (icon) is clicked
             else if(targetElement.tagName === "SPAN"){
                 if (listItem) {
                     listItem.remove();
-                    saveTaskData(); // Use global/accessible save function
+                    saveTaskData();
                 }
             }
         }, false);
         
-        // Load saved tasks when DOM is ready
         showTasks();
     }
 

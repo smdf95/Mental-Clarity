@@ -264,7 +264,7 @@ body {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-    align-items: flex-start;
+    align-items: center;
     word-break: break-word;
     text-align: left;
 }
@@ -289,6 +289,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
 }
 
 li.checked .task-text {
@@ -300,21 +301,67 @@ li.checked::before {
     content: 'check_circle'; /* Checked icon */
     color: var(--accent-color); /* Highlight color for checked */
     font-variation-settings: 'FILL' 1;
+    cursor: pointer;
 }
 
-.list span {
+.delete-icon{
     color: #AAAAAA;
     flex-shrink: 0;
     margin-left: 10px;
     transition: 0.1s ease-out;
     font-size: 20px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
 }
 
-.list span:hover {
+.list li:hover .delete-icon {
+    opacity: 1;
+    visibility: visible;
+}
+
+.delete-icon:hover {
     color: #9e0404;
     transition: 0.1s ease-in;
+    cursor: pointer;
 }
 
+/* Drag handle icon */
+.list li .drag-handle {
+    position: absolute;
+    left: -20px;
+    opacity: 0;
+    visibility: hidden; 
+    transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+    transform: translateX(-5px); 
+}
+
+/* Visible when hovering over the task */
+.list li:hover .drag-handle {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0);
+}
+
+.dragging {
+    opacity: 0.4;
+}
+
+/* Style for the item you are hovering over during a drag operation */
+.drag-over {
+    background-color: #f0f0f0; /* Change background to indicate drop zone */
+    border-top: 2px solid #333; /* Or add a line to show where it will land */
+}
+
+/* Make list items respond to hover to show they are interactive */
+.list li {
+    cursor: grab;
+    /* ... other existing styles for li ... */
+}
+
+.list li:active {
+    cursor: grabbing;
+}
 
 /* ============================================== */
 /* ================ JOURNAL PAGE ================ */
@@ -565,4 +612,36 @@ li.checked::before {
     color: #E74C3C;
     font-variation-settings: 'FILL' 1;
     transform: scale(1.15);
+}
+
+/* Meditation Page */
+
+.meditation-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    margin-top: 30px;
+    flex-wrap: no-rap;
+}
+
+.video-container {
+    margin-top: 30px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.video-text {
+    max-width: 500px;
+    text-align: left;
+}
+
+iframe {
+    max-width: 560px;
+    max-height: 315px;
+    border-radius: 15px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    max-width: 100%;
 }
