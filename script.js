@@ -2,6 +2,26 @@
 // ===================== GLOBAL UTILITIES ==========================
 // =================================================================
 
+window.addEventListener('scroll', reveal);
+
+function reveal() {
+
+    // Makes hidden elements on the page appear when scrolling towards them
+
+    var reveals = document.querySelectorAll('.reveal');
+    for (var i = 0; i < reveals.length; i++) {
+        var windowHeight = window.innerHeight;
+        var elementTop = reveals[i].getBoundingClientRect().top;
+        console.log(elementTop);
+        var elementVisible = 350;
+        if (elementTop < windowHeight - elementVisible) {
+            reveals[i].classList.add('active');
+        } else {
+            reveals[i].classList.remove('active');
+        }
+    }
+}
+
 // Global variable to hold the reference to the card being edited
 let currentEditingCard = null;
 
