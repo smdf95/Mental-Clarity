@@ -41,7 +41,7 @@ function reveal() {
 document.addEventListener('DOMContentLoaded', function() {
     const slides = document.querySelectorAll('.testimonial-slide');
     const dots = document.querySelectorAll('.dot');
-    const sliderContainer = document.querySelector('.testimonial-slider-container'); // You'll need to target the main container
+    const sliderContainer = document.querySelector('.testimonial-section'); // You'll need to target the main container
     let currentSlide = 0;
     const intervalTime = 8000; // Change slide every 8 seconds
 
@@ -106,12 +106,11 @@ document.addEventListener('DOMContentLoaded', function() {
         sliderContainer.addEventListener('touchstart', (e) => {
             // Record the starting X position of the touch
             touchStartX = e.touches[0].clientX;
+            console.log('Touch Start:', touchStartX);
         });
 
         sliderContainer.addEventListener('touchmove', (e) => {
-            // Prevent default scrolling during a horizontal swipe
-            // (Optional, but often desirable for a better slider experience)
-            // e.preventDefault();
+            e.preventDefault();
         });
 
         sliderContainer.addEventListener('touchend', (e) => {
@@ -120,6 +119,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // Calculate the distance and direction
             const distance = touchStartX - touchEndX;
+            console.log('Touch End:', touchEndX); // Log end position
+            console.log('Calculated Distance:', distance); // Log final distance
+            console.log('Swipe Successful:', Math.abs(distance) > minSwipeDistance);
 
             if (Math.abs(distance) > minSwipeDistance) {
                 // It's a valid swipe
