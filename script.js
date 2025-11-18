@@ -41,107 +41,111 @@ function reveal() {
 document.addEventListener('DOMContentLoaded', function() {
     const slides = document.querySelectorAll('.testimonial-slide');
     const dots = document.querySelectorAll('.dot');
-    const sliderContainer = document.querySelector('.testimonial-section'); // You'll need to target the main container
-    let currentSlide = 0;
-    const intervalTime = 8000; // Change slide every 8 seconds
+    const sliderContainer = document.querySelector('.testimonial-section'); 
 
-    // Variables for tracking touch/swipe
-    let touchStartX = 0;
-    let touchEndX = 0;
-    const minSwipeDistance = 50; // Minimum distance in pixels for a valid swipe
+    if (slides && dots) {
 
-    // --- Core Slider Functions ---
-
-    function showSlide(index) {
-        // Remove 'active' class from all slides and dots
-        slides.forEach(slide => slide.classList.remove('active'));
-        dots.forEach(dot => dot.classList.remove('active'));
-
-        // Wrap around to the beginning if index goes past the end
-        if (index >= slides.length) {
-            currentSlide = 0;
-        } else if (index < 0) {
-            currentSlide = slides.length - 1;
-        } else {
-            currentSlide = index;
-        }
-
-        // Add 'active' class to the current slide and dot
-        slides[currentSlide].classList.add('active');
-        dots[currentSlide].classList.add('active');
-    }
-
-    function nextSlide() {
-        showSlide(currentSlide + 1);
-    }
-
-    function prevSlide() {
-        showSlide(currentSlide - 1);
-    }
-
-    // --- Automatic Rotation ---
-
-    let sliderInterval = setInterval(nextSlide, intervalTime);
-
-    function resetInterval() {
-        clearInterval(sliderInterval);
-        sliderInterval = setInterval(nextSlide, intervalTime);
-    }
-
-    // --- Manual Control (Dots) ---
-
-    dots.forEach(dot => {
-        dot.addEventListener('click', function() {
-            const slideIndex = parseInt(this.getAttribute('data-slide'));
-            showSlide(slideIndex);
-            
-            // Reset the interval timer on manual click
-            resetInterval();
-        });
-    });
-
-    // --- Swipe Functionality ---
-
-    if (sliderContainer) {
-        sliderContainer.addEventListener('touchstart', (e) => {
-            // Record the starting X position of the touch
-            touchStartX = e.touches[0].clientX;
-            console.log('Touch Start:', touchStartX);
-        });
-
-        sliderContainer.addEventListener('touchmove', (e) => {
-            e.preventDefault();
-        });
-
-        sliderContainer.addEventListener('touchend', (e) => {
-            // Record the ending X position of the touch
-            touchEndX = e.changedTouches[0].clientX;
-
-            // Calculate the distance and direction
-            const distance = touchStartX - touchEndX;
-            console.log('Touch End:', touchEndX); // Log end position
-            console.log('Calculated Distance:', distance); // Log final distance
-            console.log('Swipe Successful:', Math.abs(distance) > minSwipeDistance);
-
-            if (Math.abs(distance) > minSwipeDistance) {
-                // It's a valid swipe
-                if (distance > 0) {
-                    // Swiped Left (Touch started on the left, ended on the right) -> Go to Next slide
-                    nextSlide();
-                } else {
-                    // Swiped Right (Touch started on the right, ended on the left) -> Go to Previous slide
-                    prevSlide();
-                }
-                
-                // Reset the interval timer on manual swipe
-                resetInterval();
+        let currentSlide = 0;
+        const intervalTime = 8000; // Change slide every 8 seconds
+    
+        // Variables for tracking touch/swipe
+        let touchStartX = 0;
+        let touchEndX = 0;
+        const minSwipeDistance = 50; // Minimum distance in pixels for a valid swipe
+    
+        // --- Core Slider Functions ---
+    
+        function showSlide(index) {
+            // Remove 'active' class from all slides and dots
+            slides.forEach(slide => slide.classList.remove('active'));
+            dots.forEach(dot => dot.classList.remove('active'));
+    
+            // Wrap around to the beginning if index goes past the end
+            if (index >= slides.length) {
+                currentSlide = 0;
+            } else if (index < 0) {
+                currentSlide = slides.length - 1;
+            } else {
+                currentSlide = index;
             }
+    
+            // Add 'active' class to the current slide and dot
+            slides[currentSlide].classList.add('active');
+            dots[currentSlide].classList.add('active');
+        }
+    
+        function nextSlide() {
+            showSlide(currentSlide + 1);
+        }
+    
+        function prevSlide() {
+            showSlide(currentSlide - 1);
+        }
+    
+        // --- Automatic Rotation ---
+    
+        let sliderInterval = setInterval(nextSlide, intervalTime);
+    
+        function resetInterval() {
+            clearInterval(sliderInterval);
+            sliderInterval = setInterval(nextSlide, intervalTime);
+        }
+    
+        // --- Manual Control (Dots) ---
+    
+        dots.forEach(dot => {
+            dot.addEventListener('click', function() {
+                const slideIndex = parseInt(this.getAttribute('data-slide'));
+                showSlide(slideIndex);
+                
+                // Reset the interval timer on manual click
+                resetInterval();
+            });
         });
+    
+        // --- Swipe Functionality ---
+    
+        if (sliderContainer) {
+            sliderContainer.addEventListener('touchstart', (e) => {
+                // Record the starting X position of the touch
+                touchStartX = e.touches[0].clientX;
+                console.log('Touch Start:', touchStartX);
+            });
+    
+            sliderContainer.addEventListener('touchmove', (e) => {
+                e.preventDefault();
+            });
+    
+            sliderContainer.addEventListener('touchend', (e) => {
+                // Record the ending X position of the touch
+                touchEndX = e.changedTouches[0].clientX;
+    
+                // Calculate the distance and direction
+                const distance = touchStartX - touchEndX;
+                console.log('Touch End:', touchEndX); // Log end position
+                console.log('Calculated Distance:', distance); // Log final distance
+                console.log('Swipe Successful:', Math.abs(distance) > minSwipeDistance);
+    
+                if (Math.abs(distance) > minSwipeDistance) {
+                    // It's a valid swipe
+                    if (distance > 0) {
+                        // Swiped Left (Touch started on the left, ended on the right) -> Go to Next slide
+                        nextSlide();
+                    } else {
+                        // Swiped Right (Touch started on the right, ended on the left) -> Go to Previous slide
+                        prevSlide();
+                    }
+                    
+                    // Reset the interval timer on manual swipe
+                    resetInterval();
+                }
+            });
+        }
+    
+    
+        // Initialize the slider (show the first slide)
+        showSlide(0);
     }
-
-
-    // Initialize the slider (show the first slide)
-    showSlide(0);
 });
 
 document.addEventListener('DOMContentLoaded', () => {
