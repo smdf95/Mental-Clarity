@@ -41,8 +41,16 @@ function reveal() {
 document.addEventListener('DOMContentLoaded', function() {
     const slides = document.querySelectorAll('.testimonial-slide');
     const dots = document.querySelectorAll('.dot');
+    const sliderContainer = document.querySelector('.testimonial-slider-container'); // You'll need to target the main container
     let currentSlide = 0;
     const intervalTime = 8000; // Change slide every 8 seconds
+
+    // Variables for tracking touch/swipe
+    let touchStartX = 0;
+    let touchEndX = 0;
+    const minSwipeDistance = 50; // Minimum distance in pixels for a valid swipe
+
+    // --- Core Slider Functions ---
 
     function showSlide(index) {
         // Remove 'active' class from all slides and dots
@@ -67,20 +75,68 @@ document.addEventListener('DOMContentLoaded', function() {
         showSlide(currentSlide + 1);
     }
 
-    // Start the automatic rotation
+    function prevSlide() {
+        showSlide(currentSlide - 1);
+    }
+
+    // --- Automatic Rotation ---
+
     let sliderInterval = setInterval(nextSlide, intervalTime);
 
-    // Optional: Add click listener to dots for manual control
+    function resetInterval() {
+        clearInterval(sliderInterval);
+        sliderInterval = setInterval(nextSlide, intervalTime);
+    }
+
+    // --- Manual Control (Dots) ---
+
     dots.forEach(dot => {
         dot.addEventListener('click', function() {
             const slideIndex = parseInt(this.getAttribute('data-slide'));
             showSlide(slideIndex);
             
             // Reset the interval timer on manual click
-            clearInterval(sliderInterval);
-            sliderInterval = setInterval(nextSlide, intervalTime);
+            resetInterval();
         });
     });
+
+    // --- Swipe Functionality ---
+
+    if (sliderContainer) {
+        sliderContainer.addEventListener('touchstart', (e) => {
+            // Record the starting X position of the touch
+            touchStartX = e.touches[0].clientX;
+        });
+
+        sliderContainer.addEventListener('touchmove', (e) => {
+            // Prevent default scrolling during a horizontal swipe
+            // (Optional, but often desirable for a better slider experience)
+            // e.preventDefault();
+        });
+
+        sliderContainer.addEventListener('touchend', (e) => {
+            // Record the ending X position of the touch
+            touchEndX = e.changedTouches[0].clientX;
+
+            // Calculate the distance and direction
+            const distance = touchStartX - touchEndX;
+
+            if (Math.abs(distance) > minSwipeDistance) {
+                // It's a valid swipe
+                if (distance > 0) {
+                    // Swiped Left (Touch started on the left, ended on the right) -> Go to Next slide
+                    nextSlide();
+                } else {
+                    // Swiped Right (Touch started on the right, ended on the left) -> Go to Previous slide
+                    prevSlide();
+                }
+                
+                // Reset the interval timer on manual swipe
+                resetInterval();
+            }
+        });
+    }
+
 
     // Initialize the slider (show the first slide)
     showSlide(0);
