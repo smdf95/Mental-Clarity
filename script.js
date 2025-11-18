@@ -12,7 +12,7 @@ function reveal() {
         var windowHeight = window.innerHeight;
         var elementTop = reveals[i].getBoundingClientRect().top;
         var elementBottom = reveals[i].getBoundingClientRect().bottom;
-        var elementVisible = 150;
+        var elementVisible = 100;
 
         // 1. Logic for adding the 'active' class (Element is visible)
         // Keeps 'active' as long as its top is below the reveal line
@@ -28,7 +28,7 @@ function reveal() {
 
             // 3. New Logic: Check if the element is above the viewport
             // This condition is true when the entire element is above the top edge of the window.
-            if (elementBottom <= 150) {
+            if (elementBottom <= 100) {
                 reveals[i].classList.add('scrolled-past');
             } else {
                 // This 'else' covers elements that are below the viewport but haven't been revealed yet.
@@ -37,6 +37,54 @@ function reveal() {
         }
     }
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+    const slides = document.querySelectorAll('.testimonial-slide');
+    const dots = document.querySelectorAll('.dot');
+    let currentSlide = 0;
+    const intervalTime = 8000; // Change slide every 8 seconds
+
+    function showSlide(index) {
+        // Remove 'active' class from all slides and dots
+        slides.forEach(slide => slide.classList.remove('active'));
+        dots.forEach(dot => dot.classList.remove('active'));
+
+        // Wrap around to the beginning if index goes past the end
+        if (index >= slides.length) {
+            currentSlide = 0;
+        } else if (index < 0) {
+            currentSlide = slides.length - 1;
+        } else {
+            currentSlide = index;
+        }
+
+        // Add 'active' class to the current slide and dot
+        slides[currentSlide].classList.add('active');
+        dots[currentSlide].classList.add('active');
+    }
+
+    function nextSlide() {
+        showSlide(currentSlide + 1);
+    }
+
+    // Start the automatic rotation
+    let sliderInterval = setInterval(nextSlide, intervalTime);
+
+    // Optional: Add click listener to dots for manual control
+    dots.forEach(dot => {
+        dot.addEventListener('click', function() {
+            const slideIndex = parseInt(this.getAttribute('data-slide'));
+            showSlide(slideIndex);
+            
+            // Reset the interval timer on manual click
+            clearInterval(sliderInterval);
+            sliderInterval = setInterval(nextSlide, intervalTime);
+        });
+    });
+
+    // Initialize the slider (show the first slide)
+    showSlide(0);
+});
 
 document.addEventListener('DOMContentLoaded', () => {
     const menuToggle = document.querySelector('.menu-toggle');
@@ -209,7 +257,7 @@ function createTaskElement(taskText) {
 
     let span = document.createElement('span');
     span.classList.add('material-symbols-outlined', 'delete-icon');
-    span.innerHTML = "delete_forever";
+    span.innerHTML = "close";
     li.appendChild(span);
     
     return li;
