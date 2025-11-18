@@ -856,6 +856,7 @@ li.checked::before {
     .inputTask input {
         font-size: 14px;
         padding: 10px 20px;
+        width: 100%;
     }
 
     .inputTask button {
