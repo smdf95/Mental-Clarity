@@ -3,7 +3,7 @@
 /* ============================================== */
 
 :root {
-    --container-bg: #FFFFFF;
+    --container-bg: #ffffff;
     --primary-text: #333333;
     --secondary-text: #4a4e69;
     --accent-color: #FF5F6D; 
@@ -36,25 +36,19 @@ body {
 /* Main Header Container */
 #header {
     display: flex;
-    /* justify-content: center;  <-- REMOVED */
-    justify-content: space-between; /* <-- ADDED */
+    justify-content: space-between;
     align-items: center;
     height: 80px;
     padding: 0 5%;
     background-color: rgba(255, 255, 255, 0.8);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(5px); 
     z-index: 1000;
 }
 
-/* Logo in navbar */
-#header .logo-link {
-    /* position: absolute; <-- REMOVED */
-    /* left: 40px; <-- REMOVED */
-    margin: 0;
-}
 
+/* Logo Styling */
 #header img {
     height: 50px;
     cursor: pointer;
@@ -108,29 +102,155 @@ body {
     border-radius: 2px;
 }
 
-@media (max-width: 600px) {
+/* --- BURGER MENU STYLES (Mobile View) --- */
+
+/* Initially hide the burger icon on large screens */
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+}
+
+.menu-toggle .menu-icon,
+.menu-toggle .close-icon {
+    font-size: 30px;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    /* Optional: Use accent color */
+    color: var(--primary-text); 
+}
+
+/* Hide the close icon by default */
+.menu-toggle .close-icon {
+    display: none;
+}
+
+/* State when the menu is OPEN (burger clicked) */
+.menu-toggle.open .menu-icon {
+    display: none; /* Hide the burger icon */
+}
+
+.menu-toggle.open .close-icon {
+    display: block; /* Show the close icon */
+}
+
+/* --- MEDIA QUERY MODIFICATIONS --- */
+@media (max-width: 1100px) {
+
+    /* Modify the header container */
     #header {
-        flex-direction: column; /* Stacks logo and nav vertically */
-        height: auto; /* Allows header to grow to fit content */
-        padding: 15px 5%; /* Adds a little vertical padding */
-        gap: 15px; /* Adds space between the logo and the nav links */
+        position: fixed; 
+        width: 100%;
+        top: 0;
+        flex-direction: row; /* Keep logo and menu-toggle on one line */
+        justify-content: space-between; /* Space out logo and menu toggle */
+        align-items: flex-start; /* Align logo and menu toggle at the top */
+        height: auto;
+        padding: 15px 5%;
+        gap: 0; /* No gap needed here */
+        z-index: 1060;
     }
 
+    /* Show the burger menu toggle button */
+    .menu-toggle {
+        display: block; 
+        position: relative;
+        z-index: 1061;
+    }
+
+    .menu-toggle,
+        a {
+            /* Removes the gray/blue overlay when tapping on mobile devices */
+            -webkit-tap-highlight-color: transparent;
+        }
+
+    /* Keep logo visible on the header line */
     #header .logo-link {
+        display: block; 
+    }
+
+    /* Position and Hide the Navigation Menu */
+    #header nav {
+        position: fixed;
+        top: 0; /* Starts at the top of the viewport */
+        right: 0; 
+        width: 70%; 
+        height: 100vh; 
+        
+        background-color: var(--container-bg, #fff); 
+        box-shadow: -4px 0 12px rgba(0, 0, 0, 0.15);
+        overflow-y: auto; 
+        
+        flex-direction: column; 
+        align-items: center;
+        /* Padding must be enough to push links below the 80px fixed header */
+        padding-top: 100px; 
+        
+        transform: translateX(100%); 
+        transition: transform 0.3s ease-in-out, box-shadow 0.3s ease; 
+        
+        /* CORRECT: Ensure the menu is high, but lower than the header (1060) */
+        z-index: 1050; 
+
+    }
+    
+    /* Show the Navigation Menu when 'open' class is applied by JS */
+    #header nav.open {
+        transform: translateX(0); 
+    }
+
+    #header nav a {
+        padding: 15px 0;
+        width: 90%;
+        text-align: center;
+        border-bottom: 1px solid #eee; /* Optional separator */
+    }
+
+
+   
+
+    /* Hide the current_page indicator line on mobile for cleaner look */
+    #header nav a.current_page::after {
         display: none;
     }
+}
 
-    #header nav {
-        flex-wrap: wrap; /* Allows links to wrap to the next line if needed */
-        justify-content: center; /* Centers links when stacked */
-        gap: 20px;
-    }
+#footer {
+    text-align: center;
+    padding: 20px 0;
+    background-color: rgba(255, 255, 255, 0.8);
+    color: var(--secondary-text);
+    font-size: 0.9em;
+    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px); 
+    margin-top: 40px;
+}
+
+.socials {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.social-icon {
+    height: 30px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    object-fit: cover;
+}
+
+.social-icon:hover {
+    transform: scale(1.1);
 }
 
 
 /* ============================================== */
 /* ================= CONTAINER ================== */
 /* ============================================== */
+
 
 .container {
     max-width: 1000px;
@@ -150,19 +270,204 @@ body {
     font-size: 2.5em;
 }
 
+@media (max-width: 1000px) {
+    .container {
+        padding-top: 80px;
+    }
+}
+
 
 /* ============================================== */
 /* ================ HOME PAGE =================== */
 /* ============================================== */
 
-/* Logo animation */
-.initial-size {
-    height: 80vh;
+.home-image {
+    max-height: 500px;
+    max-width: 50%;
 }
 
-.smaller-size {
-    height: 350px;
-    transition: 0.7s ease-in;
+
+.home-container {
+    width: 90%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    margin: 50px 5% 150px 5%;
+}
+
+.home-container h1 {
+    font-size: 2.5em;
+    color: var(--primary-text);
+    margin-bottom: 20px;
+}
+
+.home-container p {
+    font-size: 1.2em;
+    color: var(--primary-text);
+    margin-bottom: 30px;
+    max-width: 600px;
+}
+
+.discover {
+    padding: 12px 25px;
+    background: linear-gradient(90deg, 
+                rgb(255, 255, 255, 0.6), 
+                rgb(255, 255, 255, 0.8)); 
+    border: none;
+    border-radius: 30px;
+    color: var(--primary-text);
+    font-weight: 600; 
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(255, 95, 109, 0.4);
+    margin-bottom: 20px;
+    transition: 0.3s ease;
+    width: fit-content;
+}
+
+.discover:hover {
+    transform: scale(1.02);
+    box-shadow: 0 8px 25px rgba(225, 95, 109, 0.9);
+    transition: 0.3s ease;
+}
+
+.discover span {
+    transition: margin-left 0.3s ease;
+}
+
+.discover:hover span {
+    margin-left: 8px; /* Space between text and icon */
+}
+
+.discover a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: var(--primary-text);
+    font-size: 1.1em;
+}
+
+
+@media (max-width: 1100px) {
+    .home-container {
+        flex-direction: column-reverse; /* Stacks items vertically */
+        text-align: center;
+        gap: 50px;
+    }
+
+    .home-container div {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+.reveal, .triple-item.reveal {
+    transform: translateY(100px);
+    opacity: 0;
+    transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+}
+
+.reveal.active, .triple-item.reveal.active {
+    transform: translateY(0);
+    opacity: 1;
+    transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+
+}
+
+.reveal.scrolled-past, .triple-item.reveal.scrolled-past {
+    transform: translateY(-100px);
+    opacity: 0;
+    transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+}
+
+.triple {
+    display: flex;
+    justify-content: center; /* Use center instead of space-between for better control */
+    gap: 30px; /* Use gap for spacing instead of margins on .triple-item */
+    /* Adjust margin-bottom as needed, but let the surrounding section control vertical spacing */
+    margin-bottom: 50px; 
+    /* Important: Ensure the container doesn't stretch items unintentionally */
+    align-items: stretch; 
+}
+
+.triple-item {
+    flex: 0 1 300px; /* Shorthand for: flex-grow: 0, flex-shrink: 1, flex-basis: 300px */
+    max-width: 300px; /* Define a maximum size */
+    
+    background-color: var(--container-bg);
+    border-radius: 18px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s, transform 0.3s;
+    display: flex; 
+    flex-direction: column; /* Stack content vertically */
+}
+
+.triple-item:hover {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    transform: translateY(-5px);
+    transition: box-shadow 0.3s, transform 0.3s;
+}
+
+.triple-item img {
+    max-height: 130px;
+    width: 100%;
+    border-radius: 18px 18px 0 0;
+    object-fit: cover;
+}
+
+.triple-item h2 {
+    margin: 15px 0 10px;
+    font-size: 1.5em;
+    color: var(--primary-text);
+}
+
+.triple-item a {
+    display: flex; /* Make the link a flex container */
+    flex-direction: column; /* Stack H2 and P vertically */
+    flex-grow: 1; /* Key change: This ensures the link fills the height of the card */
+    
+    padding: 15px;
+    color: var(--primary-text);
+    font-size: 1.2em;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.triple-item a p {
+    flex-grow: 1; /* Key change: Allows text to push against the bottom of the card */
+    /* Reset margins that might conflict with the flex layout */
+    margin-top: 10px; 
+    margin-bottom: 0;
+    
+    font-size: 0.85em;
+    font-weight: 400;
+    color: var(--secondary-text);
+    line-height: 1.5;
+    text-align: center;
+}
+
+@media (max-width: 1100px) {
+    .triple {
+        flex-direction: column;
+        width: 80%; /* Increase width slightly for better use of space */
+        margin: 0 auto;
+        gap: 30px; /* Use the same gap for consistency */
+    }
+
+    .triple-item {
+        width: 100%;
+        max-width: none;
+        padding: 0 0 20px;
+    }
+
+    .triple-item img {
+        max-height: 180px;
+        margin-bottom: 20px;
+    }
 }
 
 /* ============================================== */
@@ -291,6 +596,8 @@ body {
 .list li .task-text {
     flex: 1;
     word-break: break-word;
+    transition: ease 0.2s;
+
 }
 
 /* Material Symbols for Checkbox */
@@ -314,6 +621,7 @@ body {
 li.checked .task-text {
     color: #AAAAAA;
     text-decoration: line-through;
+    transition: ease 0.2s;
 }
 
 li.checked::before {
@@ -380,6 +688,33 @@ li.checked::before {
 
 .list li:active {
     cursor: grabbing;
+}
+
+@media (max-width: 600px) {
+    .todo_list {
+        padding: 20px 15px;
+    }
+
+    .inputTask button {
+        padding: 12px 30px;
+        font-size: 14px;
+    }
+
+    .list li {
+        font-size: 15px;
+        padding: 10px 8px 10px 45px;
+    }
+
+    .list li::before{
+        height: 24px;
+        width: 24px;
+        left: 15px;
+        font-size: 20px;
+    }
+
+    .list li .drag-handle {
+        left: -10px;
+    }
 }
 
 /* ============================================== */
@@ -548,7 +883,10 @@ li.checked::before {
 }
 
 /* Journal cards design */
-.journal-entry-card {
+
+
+/* Base styles for the reveal/entry cards */
+.journal-entry-card.reveal {
     background-color: var(--container-bg);
     padding: 25px 30px;
     border-radius: 18px;
@@ -556,10 +894,20 @@ li.checked::before {
     height: auto;
     display: flex;
     flex-direction: column;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    opacity: 0;
+    transition: all 0.3s ease-out; 
+    transform: translate(0, 20px); 
 }
 
-.journal-entry-card:hover {
+
+.journal-entry-card.reveal.active {
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    transform: translate(0, 0);
+    opacity: 1;
+    transition: all 0.3s ease-in;
+}
+
+.journal-entry-card.reveal.active:hover {
     box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
 }
 

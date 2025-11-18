@@ -3,24 +3,59 @@
 // =================================================================
 
 window.addEventListener('scroll', reveal);
+window.addEventListener('load', reveal);
 
 function reveal() {
-
-    // Makes hidden elements on the page appear when scrolling towards them
-
     var reveals = document.querySelectorAll('.reveal');
+
     for (var i = 0; i < reveals.length; i++) {
         var windowHeight = window.innerHeight;
         var elementTop = reveals[i].getBoundingClientRect().top;
-        console.log(elementTop);
-        var elementVisible = 350;
-        if (elementTop < windowHeight - elementVisible) {
+        var elementBottom = reveals[i].getBoundingClientRect().bottom;
+        var elementVisible = 150;
+
+        // 1. Logic for adding the 'active' class (Element is visible)
+        // Keeps 'active' as long as its top is below the reveal line
+        // AND its bottom is below the scroll-past line (150px from top).
+        if (elementTop < windowHeight - elementVisible && elementBottom > elementVisible) {
             reveals[i].classList.add('active');
-        } else {
+            reveals[i].classList.remove('scrolled-past'); // Remove 'scrolled-past' if it comes back into view
+        }
+
+        // 2. Logic for elements that are NOT active
+        else {
             reveals[i].classList.remove('active');
+
+            // 3. New Logic: Check if the element is above the viewport
+            // This condition is true when the entire element is above the top edge of the window.
+            if (elementBottom <= 150) {
+                reveals[i].classList.add('scrolled-past');
+            } else {
+                // This 'else' covers elements that are below the viewport but haven't been revealed yet.
+                reveals[i].classList.remove('scrolled-past');
+            }
         }
     }
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    const menuToggle = document.querySelector('.menu-toggle');
+    const nav = document.querySelector('#header-nav'); // Use the new ID from step 1
+
+    if (menuToggle && nav) {
+        menuToggle.addEventListener('click', () => {
+            // Toggle 'open' class on the navigation
+            nav.classList.toggle('open');
+            
+            // Toggle 'open' class on the button itself (to switch icons)
+            menuToggle.classList.toggle('open');
+            
+            // For accessibility: update aria-expanded attribute
+            const isExpanded = menuToggle.classList.contains('open');
+            menuToggle.setAttribute('aria-expanded', isExpanded);
+        });
+    }
+});
 
 // Global variable to hold the reference to the card being edited
 let currentEditingCard = null;
@@ -287,7 +322,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     });
                     
                     return `
-                        <div class="journal-entry-card">
+                        <div class="journal-entry-card reveal active">
                             <p class="card-date">${date}</p>
                             <p class="card-content">${content}</p>
                             <div class="card-actions">

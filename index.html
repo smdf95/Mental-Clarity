@@ -15,7 +15,11 @@
         <a href="index.html" class="logo-link">
             <img src="images/logo.png">
         </a>
-        <nav>
+        <button class="menu-toggle" aria-expanded="false" aria-controls="header-nav">
+            <span class="material-symbols-outlined menu-icon">menu</span>
+            <span class="material-symbols-outlined close-icon">close</span>
+        </button>
+        <nav id="header-nav">
             <a href="index.html" class="current_page">Home</a>
             <a href="todo.html">To Do List</a>
             <a href="journal.html">Journal</a>
@@ -23,42 +27,44 @@
             <a href="benefits.html">Benefits</a>
         </nav>
     </div>
-    <div class="home-container reveal active">
-        <div>
-            <h1>Welcome to Mental Clarity</h1>
-            <p>Your personal tool for enhancing mental well-being through organisation, reflection, and mindfulness.</p>
-            <p>Mental Clarity offers an integrated approach to managing your mind. Use our powerful features to master your daily tasks, capture your thoughts, and find moments of peace through guided meditation.</p>
-            <div class="discover">
-                <a href="benefits.html">
-                    Discover the Benefits <span class="material-symbols-outlined">arrow_forward</span>
-                </a>
-            </div>
-
-        </div>
-        <img src="images/home-image.png" id="logo" class="home-image">
-    </div>
     <div class="container">
-        <div class="triple reveal">
-            <div class="triple-item">
-                <a href="todo.html">
-                    <img src="images/todo_icon.jpg" class="triple-icon">
-                    <h2>To Do List</h2>
-                    <p>Manage your daily tasks and priorities to stay organised and productive. This feature helps free up mental space by keeping all your responsibilities in one place, allowing you to focus on what matters most.</p>
-                </a>
+
+        <div class="home-container reveal">
+            <div>
+                <h1>Welcome to Mental Clarity</h1>
+                <p>Your personal tool for enhancing mental well-being through organisation, reflection, and mindfulness.</p>
+                <p>Mental Clarity offers an integrated approach to managing your mind. Use our powerful features to master your daily tasks, capture your thoughts, and find moments of peace through guided meditation.</p>
+                <div class="discover">
+                    <a href="benefits.html">
+                        Discover the Benefits <span class="material-symbols-outlined">arrow_forward</span>
+                    </a>
+                </div>
             </div>
-            <div class="triple-item">
-                <a href="journal.html">
-                    <img src="images/journal_icon.jpg" class="triple-icon">
-                    <h2>Journal</h2>
-                    <p>A private space to reflect on everyday moments, special events, and your current state of mind. You can capture thoughts, feelings, and practice gratitude, which has been shown to improve overall well-being.</p>
-                </a>
-            </div>
-            <div class="triple-item">
-                <a href="meditation.html">
-                    <img src="images/meditation_icon.jpeg" class="triple-icon">
-                    <h2>Meditation</h2>
-                    <p>Explore a variety of guided sessions to help you cultivate mindfulness, reduce stress and anxiety, improve focus, and enhance sleep quality. This tool offers different types of meditations depending on your current needs.</p>
-                </a>
+            <img src="images/home-image.png" id="logo" class="home-image">
+        </div>
+        <div class="container">
+            <div class="triple reveal">
+                <div class="triple-item reveal">
+                    <a href="todo.html">
+                        <img src="images/todo_icon.jpg" class="triple-icon">
+                        <h2>To Do List</h2>
+                        <p>Manage your daily tasks and priorities to stay organised and productive. This feature helps free up mental space by keeping all your responsibilities in one place, allowing you to focus on what matters most.</p>
+                    </a>
+                </div>
+                <div class="triple-item reveal">
+                    <a href="journal.html">
+                        <img src="images/journal_icon.jpg" class="triple-icon">
+                        <h2>Journal</h2>
+                        <p>A private space to reflect on everyday moments, special events, and your current state of mind. You can capture thoughts, feelings, and practice gratitude, which has been shown to improve overall well-being.</p>
+                    </a>
+                </div>
+                <div class="triple-item reveal">
+                    <a href="meditation.html">
+                        <img src="images/meditation_icon.jpeg" class="triple-icon">
+                        <h2>Meditation</h2>
+                        <p>Explore a variety of guided sessions to help you cultivate mindfulness, reduce stress and anxiety, improve focus, and enhance sleep quality. This tool offers different types of meditations depending on your current needs.</p>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
