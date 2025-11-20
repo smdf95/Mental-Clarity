@@ -25,9 +25,81 @@ body {
     overflow-y: scroll; 
 }
 
-/* ============================================== */
-/* ============== HEADER AND NAV ================ */
-/* ============================================== */
+/* --- CONTAINER --- */
+.container {
+    max-width: 1000px;
+    margin: 60px auto;
+    padding: 0 20px ;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.container h1{
+    text-align: center;
+    margin: 0 0 20px;
+    font-size: 3em;
+    font-weight: 600;
+    color: var(--primary-text);
+}
+
+.inner-container {
+    max-width: 1000px;
+    margin: 50px auto;
+    padding: 0 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.inner-container h1 {
+    text-align: center;
+    margin: 0 0 50px;
+    font-size: 2.5em;
+    font-weight: 600;
+    color: var(--primary-text);
+}
+
+/* --- PAGE-INTRO --- */
+
+.page-intro {
+    max-width: 800px;
+    margin: 0 auto 30px auto; /* Margin above the button */
+    padding: 15px 0;
+    text-align: center;
+}
+
+.page-intro p {
+    font-size: 1.1em;
+    color: var(--primary-text);
+    line-height: 1.6;
+    margin-bottom: 10px;
+}
+
+/* --- REVEAL CONTENT --- */
+.reveal, .triple-item.reveal {
+    transform: translateY(100px);
+    opacity: 0;
+    transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+}
+
+.reveal.active, .triple-item.reveal.active {
+    transform: translateY(0);
+    opacity: 1;
+    transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+
+}
+
+.reveal.scrolled-past, .triple-item.reveal.scrolled-past {
+    transform: translateY(-100px);
+    opacity: 0;
+    transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+}
+
 
 /* ============================================== */
 /* ============== HEADER AND NAV ================ */
@@ -117,7 +189,6 @@ body {
 .menu-toggle .close-icon {
     font-size: 30px;
     transition: transform 0.3s ease, opacity 0.3s ease;
-    /* Optional: Use accent color */
     color: var(--primary-text); 
 }
 
@@ -126,95 +197,16 @@ body {
     display: none;
 }
 
-/* State when the menu is OPEN (burger clicked) */
+/* State when the menu is OPEN */
 .menu-toggle.open .menu-icon {
-    display: none; /* Hide the burger icon */
+    display: none;
 }
 
 .menu-toggle.open .close-icon {
-    display: block; /* Show the close icon */
+    display: block;
 }
 
-/* --- MEDIA QUERY MODIFICATIONS --- */
-@media (max-width: 1100px) {
-
-    /* Modify the header container */
-    #header {
-        position: fixed; 
-        width: 100%;
-        top: 0;
-        flex-direction: row; /* Keep logo and menu-toggle on one line */
-        justify-content: space-between; /* Space out logo and menu toggle */
-        align-items: flex-start; /* Align logo and menu toggle at the top */
-        height: auto;
-        padding: 15px 5%;
-        gap: 0; /* No gap needed here */
-        z-index: 1060;
-    }
-
-    /* Show the burger menu toggle button */
-    .menu-toggle {
-        display: block; 
-        position: relative;
-        z-index: 1061;
-    }
-
-    .menu-toggle,
-        a, .dot {
-            /* Removes the gray/blue overlay when tapping on mobile devices */
-            -webkit-tap-highlight-color: transparent;
-        }
-
-    /* Keep logo visible on the header line */
-    #header .logo-link {
-        display: block; 
-    }
-
-    /* Position and Hide the Navigation Menu */
-    #header nav {
-        position: fixed;
-        top: 0; /* Starts at the top of the viewport */
-        right: 0; 
-        width: 70%; 
-        height: 100vh; 
-        
-        background-color: var(--container-bg, #fff); 
-        box-shadow: -4px 0 12px rgba(0, 0, 0, 0.15);
-        overflow-y: auto; 
-        
-        flex-direction: column; 
-        align-items: center;
-        /* Padding must be enough to push links below the 80px fixed header */
-        padding-top: 100px; 
-        
-        transform: translateX(100%); 
-        transition: transform 0.3s ease-in-out, box-shadow 0.3s ease; 
-        
-        /* CORRECT: Ensure the menu is high, but lower than the header (1060) */
-        z-index: 1050; 
-
-    }
-    
-    /* Show the Navigation Menu when 'open' class is applied by JS */
-    #header nav.open {
-        transform: translateX(0); 
-    }
-
-    #header nav a {
-        padding: 15px 0;
-        width: 90%;
-        text-align: center;
-        border-bottom: 1px solid #eee; /* Optional separator */
-    }
-
-
-   
-
-    /* Hide the current_page indicator line on mobile for cleaner look */
-    #header nav a.current_page::after {
-        display: none;
-    }
-}
+/* --- FOOTER --- */
 
 #footer {
     text-align: center;
@@ -246,69 +238,9 @@ body {
     transform: scale(1.1);
 }
 
-
-/* ============================================== */
-/* ================= CONTAINER ================== */
-/* ============================================== */
-
-
-.container {
-    max-width: 1000px;
-    margin: 60px auto;
-    padding: 0 20px 60px;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-.container h1{
-    text-align: center;
-    margin: 0 0 20px;
-    color: var(--primary-text);
-    font-size: 2.5em;
-}
-
-.page-intro {
-    max-width: 800px;
-    margin: 0 auto 30px auto; /* Margin above the button */
-    padding: 15px 0;
-    text-align: center;
-}
-
-.page-intro p {
-    font-size: 1.1em;
-    color: var(--primary-text);
-    line-height: 1.6;
-    margin-bottom: 10px;
-}
-
-@media (max-width: 1100px) {
-    .container:last-of-type {
-        padding-bottom: 20px;
-        margin-bottom: 20px;
-    }
-
-    .container {
-        padding: 100px 0 50px;
-        width: 90%;
-        margin: auto;
-    }
-    
-    
-}
-
-
 /* ============================================== */
 /* ================ HOME PAGE =================== */
 /* ============================================== */
-
-.home-image {
-    max-height: 500px;
-    max-width: 50%;
-}
-
 
 .home-container {
     width: 90%;
@@ -319,18 +251,39 @@ body {
     margin: 50px 5% 150px 5%;
 }
 
-.home-container h1 {
-    font-size: 2.5em;
+.home-intro {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    text-align: left;
+    max-width: 600px;
+    flex-grow: 1;
+}
+
+.home-intro h1 {
+    text-align: left;
+    font-size: 3em;
     color: var(--primary-text);
     margin-bottom: 20px;
 }
 
-.home-container p {
+.home-intro p {
     font-size: 1.2em;
     color: var(--primary-text);
     margin-bottom: 30px;
     max-width: 600px;
 }
+
+
+.home-image {
+    max-height: 500px;
+    max-width: 55%;
+    object-fit: contain;
+}
+
+
+/* --- DISCOVER BUTTON --- */
 
 .discover {
     padding: 12px 25px;
@@ -359,7 +312,7 @@ body {
 }
 
 .discover:hover span {
-    margin-left: 8px; /* Space between text and icon */
+    margin-left: 8px;
 }
 
 .discover a {
@@ -371,54 +324,13 @@ body {
     font-size: 1.1em;
 }
 
-
-@media (max-width: 1100px) {
-    .home-image {
-        max-width: 80%;
-        max-height: 300px;
-    }
-
-    .home-container {
-        margin-bottom: 0;
-        flex-direction: column-reverse; /* Stacks items vertically */
-        text-align: center;
-        gap: 50px;
-    }
-
-    .home-container div {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-    }
-}
-
-.reveal, .triple-item.reveal {
-    transform: translateY(100px);
-    opacity: 0;
-    transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
-}
-
-.reveal.active, .triple-item.reveal.active {
-    transform: translateY(0);
-    opacity: 1;
-    transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
-
-}
-
-.reveal.scrolled-past, .triple-item.reveal.scrolled-past {
-    transform: translateY(-100px);
-    opacity: 0;
-    transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
-}
+/* --- TRIPLE DIV (Three box menu) --- */
 
 .triple {
     display: flex;
-    justify-content: center; /* Use center instead of space-between for better control */
-    gap: 30px; /* Use gap for spacing instead of margins on .triple-item */
-    /* Adjust margin-bottom as needed, but let the surrounding section control vertical spacing */
+    justify-content: center;
+    gap: 30px;
     margin-bottom: 50px; 
-    /* Important: Ensure the container doesn't stretch items unintentionally */
     align-items: stretch; 
 }
 
@@ -454,10 +366,9 @@ body {
 }
 
 .home.triple-item a {
-    display: flex; /* Make the link a flex container */
-    flex-direction: column; /* Stack H2 and P vertically */
-    flex-grow: 1; /* Key change: This ensures the link fills the height of the card */
-    
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
     padding: 15px;
     color: var(--primary-text);
     font-size: 1.2em;
@@ -467,11 +378,8 @@ body {
 }
 
 .home.triple-item a p {
-    flex-grow: 1; /* Key change: Allows text to push against the bottom of the card */
-    /* Reset margins that might conflict with the flex layout */
-    margin-top: 10px; 
+    flex-grow: 1;
     margin-bottom: 0;
-    
     font-size: 0.85em;
     font-weight: 400;
     color: var(--secondary-text);
@@ -480,7 +388,18 @@ body {
     padding-bottom: 20px;
 }
 
+/* --- TESTIMONIALS --- */
+
+h1.testimonial-heading {
+    text-align: center;
+    margin-bottom: 50px;
+    font-size: 2.5em;
+    color: var(--primary-text);
+    margin-bottom: 20px;
+}
+
 .testimonial-section {
+    width: 90%;
     max-width: 800px;
     margin: 60px auto 80px auto;
     padding: 30px;
@@ -488,28 +407,25 @@ body {
     border-radius: 12px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
     text-align: center;
-    
     position: relative; 
     overflow: hidden; 
-    /* 🔑 Adjust min-height to fit the picture + quote + source */
     min-height: 350px; 
     clear: both;
 }
 
-/* --- NEW: PROFILE PICTURE STYLES --- */
+/* --- PROFILE PICTURE STYLES --- */
 .testimonial-profile-pic {
-    width: 80px; /* Size of the profile picture */
+    width: 80px;
     height: 80px;
-    border-radius: 50%; /* Makes it perfectly circular */
-    object-fit: cover; /* Ensures image covers the circle without distortion */
-    border: 3px solid #a0522d; /* A subtle border in your theme color */
-    margin-bottom: 20px; /* Space between picture and quote */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #a0522d;
+    margin: 20px 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 /* --- SLIDE STYLES --- */
 .testimonial-slides {
-    position: relative;
     height: 100%;
 }
 
@@ -518,12 +434,8 @@ body {
     top: 0;
     left: 0;
     width: 100%;
-    
-    /* Initially hide all slides and prepare for transition */
     opacity: 0; 
-    transition: opacity 0.5s ease-in-out; /* Slower transition for a smooth fade */
-    
-    /* Ensure only the active slide is visible */
+    transition: opacity 0.5s ease-in-out;
     pointer-events: none;
 }
 
@@ -532,13 +444,12 @@ body {
     pointer-events: auto;
 }
 
-/* --- TEXT STYLES (Keep them simple, as requested) --- */
 .testimonial-section .quote {
     font-size: 1.5em;
     font-style: italic;
     color: #444;
     line-height: 1.4;
-    margin-bottom: 5px;
+    margin: 5px 15px;
 }
 
 .testimonial-section .source {
@@ -546,13 +457,11 @@ body {
     font-weight: 600;
     color: #a0522d;
     margin-top: 15px;
-    padding-bottom: 20px;
 }
 
 /* --- DOT NAVIGATION STYLES --- */
 .testimonial-dots {
     text-align: center;
-    padding-top: 20px;
     position: absolute;
     bottom: 10px;
     left: 50%;
@@ -574,80 +483,6 @@ body {
     background-color: #a0522d;
 }
 
-@media (max-width: 1100px) {
-    .home.triple {
-        flex-direction: column;
-        width: 100%;
-        margin: 0 auto;
-        justify-content: center;
-        align-items: center;
-        gap: 30px; /* Use the same gap for consistency */
-    }
-
-    .triple-item {
-        width: 100%;
-        padding: 0 0 20px;
-    }
-
-    .triple-item img {
-        max-height: 180px;
-        margin-bottom: 20px;
-    }
-
-    .testimonial-container {
-
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        margin: auto;
-        width: 90%;
-        box-sizing: border-box;
-    }
-
-    .testimonial-container h2 {
-        font-size: 1.8em;
-        margin-bottom: 20px;
-        color: var(--primary-text);
-    }
-
-    .testimonial-section {
-        /* Reduce side margins/padding to give content more room */
-        padding: 20px; 
-        margin: 40px auto; /* Slightly less vertical margin */
-        
-        /* Reduce min-height slightly, since lines will wrap more */
-        min-height: 380px; 
-        width: 90%;
-    }
-
-    /* --- Profile Picture Adjustments --- */
-    .testimonial-profile-pic {
-        width: 70px; /* Make the picture slightly smaller */
-        height: 70px;
-        margin-bottom: 15px;
-    }
-
-    /* --- Quote Text Adjustments --- */
-    .testimonial-section .quote {
-        /* Reduce font size for better readability on small screens */
-        font-size: 1.2em; 
-        line-height: 1.5;
-    }
-    
-    /* --- Source Text Adjustments --- */
-    .testimonial-section .source {
-        font-size: 0.9em; 
-        margin-top: 10px;
-    }
-
-    /* --- Dot Navigation Adjustments --- */
-    .testimonial-dots {
-        bottom: 5px; /* Push dots closer to the bottom edge */
-    }
-
-    
-    
-}
 
 /* ============================================== */
 /* ============== TO DO LIST PAGE =============== */
@@ -717,6 +552,7 @@ body {
     font-weight: 600;
     color: white;
     transition: 0.2s ease-out;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .inputTask button:hover {
@@ -760,41 +596,67 @@ body {
 .list li {
     list-style: none;
     font-size: 17px;
-    padding: 12px 8px 12px 50px;
+    padding: 12px 8px 12px 10px;
     color: #333;
-    cursor: pointer;
-    position: relative;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-    align-items: center;
+    align-items: flex-start;
     word-break: break-word;
     text-align: left;
+    cursor: grab;
+}
+
+/* Make list items respond to hover to show they are interactive */
+
+.list li:active {
+    cursor: grabbing;
+}
+
+/* Drag handle icon */
+.list li .drag-handle {
+    opacity: 0;
+    visibility: hidden; 
+    transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+    transform: translateX(-5px); 
+    padding-left: 0;
+
+}
+
+.list li > * {
+    padding-left: 20px;
 }
 
 .list li .task-text {
     flex: 1;
     word-break: break-word;
     transition: ease 0.2s;
-
 }
 
 /* Material Symbols for Checkbox */
-.list li::before{
-    content: 'radio_button_unchecked'; /* Default unchecked icon */
-    position: absolute;
-    height: 28px;
-    width: 28px;
-    left: 8px;
-
+li span.checked {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
     color: #999;
     font-family: 'Material Symbols Outlined';
     font-size: 24px;
-    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     cursor: pointer;
+    transition: ease 0.3s;
+}
+
+li span.checked:hover {
+    color: var(--accent-color);
+    transition: ease 0.3s;
+}
+
+li.checked span.checked {
+    color: var(--accent-color);
+    font-variation-settings: 'FILL' 1;
+    cursor: pointer;
+    transition: ease 0.3s;
+}
+
+li.checked span.checked:hover {
+    color: #e7503f;
 }
 
 li.checked .task-text {
@@ -803,17 +665,10 @@ li.checked .task-text {
     transition: ease 0.2s;
 }
 
-li.checked::before {
-    content: 'check_circle'; /* Checked icon */
-    color: var(--accent-color); /* Highlight color for checked */
-    font-variation-settings: 'FILL' 1;
-    cursor: pointer;
-}
 
 .delete-icon{
     color: #AAAAAA;
     flex-shrink: 0;
-    margin-left: 10px;
     transition: 0.1s ease-out;
     font-size: 20px;
     opacity: 0;
@@ -832,21 +687,15 @@ li.checked::before {
     cursor: pointer;
 }
 
-/* Drag handle icon */
-.list li .drag-handle {
-    position: absolute;
-    left: -20px;
-    opacity: 0;
-    visibility: hidden; 
-    transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
-    transform: translateX(-5px); 
-}
-
 /* Visible when hovering over the task */
 .list li:hover .drag-handle {
-    opacity: 1;
+    opacity: 0.4;
     visibility: visible;
     transform: translateX(0);
+}
+
+.list li .drag-handle:hover {
+    opacity: 0.8;
 }
 
 .dragging {
@@ -855,101 +704,43 @@ li.checked::before {
 
 /* Style for the item you are hovering over during a drag operation */
 .drag-over {
-    background-color: #f0f0f0; /* Change background to indicate drop zone */
-    border-top: 2px solid #333; /* Or add a line to show where it will land */
-}
-
-/* Make list items respond to hover to show they are interactive */
-.list li {
-    cursor: grab;
-    /* ... other existing styles for li ... */
-}
-
-.list li:active {
-    cursor: grabbing;
-}
-
-@media (max-width: 1100px) {
-    
-    .todo_list {
-        padding: 20px 15px;
-    }
-    
-    .todo_list h2 {
-        font-size: 1.3em;
-    }
-
-    .inputTask input {
-        font-size: 14px;
-        padding: 10px 20px;
-        width: 100%;
-    }
-
-    .inputTask button {
-        padding: 12px 30px;
-        font-size: 14px;
-    }
-
-    .list li {
-        font-size: 15px;
-        padding: 10px 8px 10px 45px;
-    }
-
-    .list li .drag-handle {
-        height: 18px;
-        opacity: 1;
-        visibility: visible;
-        left: -5px;
-        transform: translateX(0);
-    }
-
-    .list li .delete-icon {
-        opacity: 1;
-        visibility: visible;
-        font-size: 18px;
-    }
-
-    .list li::before{
-        height: 24px;
-        width: 24px;
-        left: 15px;
-        font-size: 20px;
-    }
-
+    background-color: #f0f0f0;
+    border-top: 2px solid #333;
 }
 
 /* ============================================== */
 /* ================ JOURNAL PAGE ================ */
 /* ============================================== */
 
-/* Add journal button */
+/* --- Add Journal Button --- */
 .add-journal-btn {
     padding: 12px 25px;
+    /* Cleaned up linear-gradient definition */
     background: linear-gradient(90deg, 
-                rgb(255, 255, 255, 0.6), 
-                rgb(255, 255, 255, 0.8), 
-                rgb(255, 255, 255, 0.6));
+        rgba(255, 255, 255, 0.6), 
+        rgba(255, 255, 255, 0.8), 
+        rgba(255, 255, 255, 0.6));
     border: none;
     border-radius: 30px;
     color: var(--primary-text);
     font-weight: 600; 
     cursor: pointer;
-    box-shadow: 0 4px 15px rgba(255, 95, 109, 0.4);
+    box-shadow: 0 4px 15px rgba(255, 95, 109, 0.4); /* Shadow hinting at accent color */
     margin-bottom: 20px;
     transition: all 0.2s ease-out;
+    display: inline-block; /* Ensures margin/padding works correctly */
 }
 
 .add-journal-btn:hover {
     transform: scale(1.03);
-    background: linear-gradient( 
-                rgb(255, 255, 255, 0.8), 
-                rgb(255, 255, 255, 0.8));
+    /* Simplified hover background */
+    background: rgba(255, 255, 255, 0.9);
     box-shadow: 0 8px 25px rgba(255, 95, 109, 0.7);
     filter: brightness(1.1);
     transition: all 0.1s ease-in;
 }
 
-/* Dialog for journal entry */
+/* --- Journal Entry Dialog (Modal) --- */
 #journalDialog {
     border: none;
     padding: 0;
@@ -966,7 +757,6 @@ li.checked::before {
     backdrop-filter: blur(3px);
 }
 
-/* Content of dialog box */
 .dialog-content {
     padding: 25px;
 }
@@ -976,17 +766,17 @@ li.checked::before {
     justify-content: space-between;
     align-items: center;
     padding-bottom: 15px;
-    border-bottom: 1px solid #eee; /* Separator line */
+    border-bottom: 1px solid #eee; 
     margin-bottom: 20px;
 }
 
 .dialog-title {
-    color: #333; /* Dark color for readability */
+    color: #333; 
     font-size: 1.5em;
     font-weight: 600;
 }
 
-/* Close Button at the top of dialog */
+/* Close Button */
 .close-btn {
     background: transparent;
     border: none;
@@ -999,10 +789,10 @@ li.checked::before {
 }
 
 .close-btn:hover {
-    color: #FF5945; /* Matches your accent color */
+    color: #FF5945;
 }
 
-/* Form Elements */
+/* --- Form Elements --- */
 .form-group {
     margin-bottom: 20px;
     text-align: left;
@@ -1023,7 +813,7 @@ li.checked::before {
     border-radius: 8px;
     font-size: 16px;
     resize: vertical;
-    box-sizing: border-box;
+    box-sizing: border-box; /* Includes padding and border in the element's total width/height */
     transition: border-color 0.2s, box-shadow 0.2s;
 }
 
@@ -1033,7 +823,7 @@ li.checked::before {
     box-shadow: 0 0 0 3px rgba(255, 95, 109, 0.2);
 }
 
-/* Buttons at the bottom of the Dialog box */
+/* --- Dialog Buttons --- */
 .dialog-actions {
     display: flex;
     justify-content: flex-end;
@@ -1046,7 +836,7 @@ li.checked::before {
     border-radius: 20px;
     font-weight: 500;
     cursor: pointer;
-    transition: background-color 0.2s, opacity 0.2s;
+    transition: background-color 0.2s, opacity 0.2s, box-shadow 0.2s;
     border: none;
 }
 
@@ -1061,8 +851,9 @@ li.checked::before {
 }
 
 .save-btn {
+    /* Defined the gradient fully inline */
     background: linear-gradient(90deg, #FF5F6D, #FFC371); 
-    color: var(--primary-text); /* Use dark text for contrast on the bright gradient */
+    color: #ffffff; /* Explicitly set white text for high contrast on the gradient */
 }
 
 .save-btn:hover {
@@ -1070,12 +861,11 @@ li.checked::before {
     box-shadow: 0 2px 5px rgba(255, 95, 109, 0.5);
 }
 
-/* Journal Entries */
+/* --- Journal Entries Grid --- */
 
-/* Layout for journal entries */
 #journal {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr; /* Two columns for entries */
     gap: 30px;
     margin-top: 40px;
     padding-bottom: 50px;
@@ -1083,10 +873,9 @@ li.checked::before {
     width: 100%;
 }
 
-/* Journal cards design */
+/* --- Journal Entry Card --- */
 
-
-/* Base styles for the reveal/entry cards */
+/* Base styles for the entry cards */
 .journal-entry-card.reveal {
     background-color: var(--container-bg);
     padding: 25px 30px;
@@ -1095,12 +884,13 @@ li.checked::before {
     height: auto;
     display: flex;
     flex-direction: column;
+    /* Initial state for the reveal animation */
     opacity: 0;
     transition: all 0.3s ease-out; 
     transform: translate(0, 20px); 
 }
 
-
+/* Active state after loading (JS applies this class) */
 .journal-entry-card.reveal.active {
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
     transform: translate(0, 0);
@@ -1123,17 +913,18 @@ li.checked::before {
 }
 
 .card-content {
-    flex-grow: 1;
+    flex-grow: 1; /* Pushes action buttons to the bottom */
     font-size: 1.05em;
     line-height: 1.6;
     color: var(--primary-text);
-    white-space: pre-wrap;
+    /* Ensures text handles complex formatting and breaks properly */
+    white-space: pre-wrap; 
     word-wrap: break-word;
     margin-bottom: 15px;
     font-family: 'Inter', sans-serif;
 }
 
-/* Buttons for editing or deleting entry */
+/* --- Card Actions (Edit/Delete Buttons) --- */
 .journal-entry-card .card-actions {
     display: flex;
     justify-content: flex-end;
@@ -1153,6 +944,7 @@ li.checked::before {
     justify-content: center;
 }
 
+/* Styles for Material Symbols Icons */
 .journal-entry-card .card-actions .material-symbols-outlined {
     font-size: 1.5em;
     font-variation-settings:
@@ -1168,7 +960,7 @@ li.checked::before {
 
 .edit-card-btn:hover .material-symbols-outlined {
     color: #000000;
-    font-variation-settings: 'FILL' 1;
+    font-variation-settings: 'FILL' 1; /* Fill the icon on hover */
     transform: scale(1.15);
 }
 
@@ -1182,56 +974,47 @@ li.checked::before {
     transform: scale(1.15);
 }
 
-@media (max-width: 1100px) {
-    #journal {
-        grid-template-columns: 1fr; /* Single column on small screens */
-        gap: 30px; /* Slightly reduced gap */
-    }
-}
+/* ============================================== */
+/* ============== MEDITATION PAGE =============== */
+/* ============================================== */
 
-/* Meditation Page */
-
-/* --- REVISED STYLES FOR THE MEDITATION CARD --- */
-
-/* Retain the original body/header styles */
-
-/*
- * Meditation Card Styling
- */
+/* Meditation Card Styling */
 .meditation-container {
-    /* Stack containers with some space */
     margin-bottom: 35px; 
     
     display: flex;
-    gap: 30px; /* Reduced gap */
+    gap: 30px; 
     align-items: center;
     
     background-color: var(--container-bg);
     padding: 30px;
     border-radius: 18px;
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08); /* Lighter shadow */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08); 
     transition: all 0.3s ease;
 }
 
 .meditation-container:hover {
     transform: translateY(-3px); 
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* Slightly better hover shadow */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); 
 }
 
 .meditation-container:first-of-type {
     margin-top: 20px;
 }
 
+/* Alternate the layout for odd-numbered cards */
 .meditation-container:nth-child(odd) {
-    flex-direction: row-reverse; /* Swap the video-container and video-text divs */
+    flex-direction: row-reverse; 
 }
 
-/* Video Frame Styling (40% width) */
+/* --- Video Frame Styling --- */
 .video-container {
-    flex: 0 0 45%; /* Increased video area slightly */
+    flex: 1; 
+    flex-basis: 45%; 
     position: relative;
-    /* Maintain 16:9 Aspect Ratio within the container width */
-    padding-bottom: 25.3125%; /* (45% * 0.5625 = 25.3125) */
+    
+    /* Standard 16:9 Aspect Ratio Hack */
+    padding-bottom: 42.86%; /* 9 / 16 = 0.5625 (56.25%) */
     height: 0;
     overflow: hidden;
     border-radius: 18px;
@@ -1247,80 +1030,33 @@ li.checked::before {
     border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
-/* Video Text Styling (55% width) */
+/* --- Video Text Styling (55% width) --- */
 .video-text {
-    flex: 0 0 55%; 
+    flex: 1; 
+    flex-basis: 55%; 
     padding: 0 20px;
 }
 
 .video-text h2 {
-    font-size: 1.6em; /* Slightly smaller heading */
+    font-size: 1.6em; 
     color: #a0522d; 
     margin-top: 0;
     margin-bottom: 28px;
-    font-weight: 600; /* Bolder for prominence */
+    font-weight: 600; 
 }
 
 .video-text p {
-    font-size: 1em; /* Slightly smaller body text */
+    font-size: 1em; 
     line-height: 1.5;
     color: #555;
 }
 
-
-/*
- * Media Queries for Responsiveness (Unchanged from previous suggestion)
- */
-@media (max-width: 1100px) {
-    /* Force stacking and remove alternating layout on small screens */
-    .meditation-container, 
-    .meditation-container:nth-child(odd) {
-        flex-direction: column; 
-        padding: 20px;
-    }
-
-    /* Video container full width on mobile */
-    .video-container {
-        flex: 1 1 100%;
-        width: 100%;
-        padding-bottom: 56.25%; /* Standard 16:9 aspect ratio */
-        margin-bottom: 15px;
-    }
-
-    .video-text {
-        flex: 1 1 100%;
-        padding: 0;
-        text-align: center;
-    }
-
-    .video-text h2 {
-        text-align: center;
-    }
-}
-
-/* --- BENEFITS PAGE SPECIFIC STYLES --- */
-
-.benefits-intro {
-    text-align: center;
-    padding: 20px 0 50px;
-}
-
-.benefits-intro h1 {
-    font-size: 3em;
-    font-weight: 300;
-    margin-bottom: 10px;
-}
-
-.benefits-intro .subtitle {
-    font-size: 1.2em;
-    max-width: 800px;
-    margin: 0 auto;
-    color: #555;
-    line-height: 1.6;
-}
+/* ============================================== */
+/* ================ BENEFITS PAGE =============== */
+/* ============================================== */
 
 .benefits-section {
-    background-color: #fff; /* White background for each section */
+    background-color: #fff;
     padding: 40px;
     margin-bottom: 30px;
     border-radius: 12px;
@@ -1328,29 +1064,30 @@ li.checked::before {
 }
 
 .benefits-section h2 {
-    color: var(--primary-color, #a0522d); /* Use your theme's main colour */
+    color: var(--primary-color, #a0522d); 
     font-size: 2em;
     margin-bottom: 25px;
-    border-bottom: 2px solid rgba(160, 82, 45, 0.1);
+    border-bottom: 2px solid rgba(160, 82, 45, 0.1); /* Light separator line */
     padding-bottom: 10px;
 }
 
+/* Base two-column layout */
 .benefit-content {
     display: flex;
     gap: 40px;
     align-items: flex-start;
 }
 
+/* Layout swap */
 .benefit-content.reverse-layout {
-    flex-direction: row-reverse; /* Swap the order of text/list for visual interest */
+    flex-direction: row-reverse;
 }
 
 .benefit-text {
-    flex: 2;
+    /* Takes up 2/3 of the available space */
+    flex: 2; 
     display: flex;
     flex-direction: column;
-    align-items: stretch; 
-
 }
 
 .benefit-text h3 {
@@ -1367,7 +1104,8 @@ li.checked::before {
 }
 
 .benefit-list {
-    flex: 1; /* Takes up 1/3 of the space */
+    /* Takes up 1/3 of the available space */
+    flex: 1; 
     list-style: none;
     padding-left: 0;
     margin-top: 10px;
@@ -1377,10 +1115,12 @@ li.checked::before {
     background-color: #f7f7f7;
     padding: 10px 15px;
     margin-bottom: 8px;
-    border-left: 4px solid var(--primary-color, #a0522d);
+    border-left: 4px solid var(--primary-color, #a0522d); 
     border-radius: 4px;
     font-weight: 500;
 }
+
+/* Call To Action */
 
 .call-to-action {
     text-align: center;
@@ -1399,8 +1139,14 @@ li.checked::before {
     margin-bottom: 30px;
 }
 
+/* Ensure the triple layout is a flex container for the buttons */
+.call-to-action .triple {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
 .call-to-action .triple-item a {
-    /* Style the CTA links to be buttons */
     padding: 15px 30px;
     background-color: var(--primary-color, #a0522d);
     color: #fff;
@@ -1408,23 +1154,290 @@ li.checked::before {
     font-weight: 700;
     font-size: 1.1em;
     text-decoration: none;
-    transition: background-color 0.3s;
     display: flex;
     justify-content: center;
-    transition: background-color 0.3s, box-shadow 0.3s, transform 0.3s;
-
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
 }
 
 .call-to-action .triple-item a:hover {
     background-color: #8c4627;
     transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
 }
 
-/* Media Query for Mobile Responsiveness */
+/* ============================================== */
+/* ================ MOBILE STYLE ================ */
+/* ============================================== */
+
 @media (max-width: 1100px) {
+
+    /* --- HEADER & NAVIGATION --- */
+    
+    #header {
+        /* Fixes header to the top and ensures full width */
+        position: fixed; 
+        width: 100%;
+        top: 0;
+        
+        /* Flex setup for logo and menu-toggle */
+        flex-direction: row; 
+        justify-content: space-between; 
+        align-items: center; /* Better alignment for centered items */
+        height: auto;
+        padding: 15px 5%;
+        gap: 0;
+        z-index: 1060; /* High Z-index to cover all page content */
+    }
+
+    /* Show the burger menu toggle button */
+    .menu-toggle {
+        display: block; 
+        position: relative;
+        z-index: 1061; /* Must be above the header to be clickable */
+    }
+
+    /* Removes the gray/blue overlay when tapping on mobile devices */
+    .menu-toggle,
+    .menu-toggle a, 
+    .menu-toggle .dot {
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    /* Ensure the logo remains visible next to the menu toggle */
+    #header .logo-link {
+        display: block; 
+    }
+
+    /* Position and Hide the Navigation Menu (Off-canvas sidebar) */
+    #header nav {
+        position: fixed;
+        top: 0; 
+        right: 0; 
+        width: 70%; 
+        height: 100vh; 
+        
+        background-color: var(--container-bg, #fff); 
+        box-shadow: -4px 0 12px rgba(0, 0, 0, 0.15);
+        overflow-y: auto; /* Allows scrolling for many links */
+        
+        flex-direction: column; 
+        align-items: center;
+        
+        /* Ensures links start below the fixed header */
+        padding-top: 100px; 
+        
+        /* Hides the menu off-screen */
+        transform: translateX(100%); 
+        transition: transform 0.3s ease-in-out, box-shadow 0.3s ease; 
+        
+        /* Must be below the header (1060) but above content */
+        z-index: 1050; 
+    }
+    
+    /* Show the Navigation Menu when 'open' class is applied by JS */
+    #header nav.open {
+        transform: translateX(0); 
+    }
+
+    #header nav a {
+        padding: 15px 0;
+        width: 90%;
+        text-align: center;
+        border-bottom: 1px solid #eee; 
+    }
+
+    /* Hide the desktop current_page indicator line */
+    #header nav a.current_page::after {
+        display: none;
+    }
+
+    /* --- GLOBAL CONTAINER / LAYOUT --- */
+
+    .container {
+        /* Adds margin from the fixed header */
+        padding: 100px 0 50px; 
+        width: 90%;
+        margin: auto;
+    }
+
+    .container:last-of-type {
+        /* Prevents last container from pushing footer too close */
+        padding-bottom: 20px;
+        margin-bottom: 20px;
+    }
+
+    /* --- HOME PAGE SECTIONS --- */
+
+    /* Stack items vertically and reverse the order */
+    .home-container {
+        flex-direction: column-reverse; 
+        text-align: center;
+        margin-bottom: 0;
+        gap: 50px;
+    }
+    
+    .home-image {
+        max-width: 80%;
+        max-height: 300px;
+    }
+
+    .home-container div {
+        /* Centralizes the stacked text content */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* Triple layout (benefits/features) */
+    .home.triple {
+        flex-direction: column;
+        width: 100%;
+        margin: 0 auto;
+        justify-content: center;
+        align-items: center;
+        gap: 30px; 
+    }
+
+    .triple-item {
+        width: 100%;
+        padding: 0 0 20px;
+    }
+
+    .triple-item img {
+        max-height: 180px;
+        margin-bottom: 20px;
+    }
+
+    /* --- TESTIMONIALS --- */
+
+    .testimonial-container {
+        flex-direction: column;
+        align-items: center;
+        margin: auto;
+        width: 90%;
+        box-sizing: border-box;
+    }
+
+    .testimonial-container h2 {
+        font-size: 1.8em;
+        margin-bottom: 20px;
+    }
+
+    .testimonial-section {
+        padding: 20px; 
+        margin: 40px auto; 
+        min-height: 380px; 
+        width: 90%;
+    }
+
+    .testimonial-profile-pic {
+        width: 70px; 
+        height: 70px;
+        margin-bottom: 15px;
+    }
+
+    .testimonial-section .quote {
+        font-size: 1.2em; 
+        line-height: 1.5;
+    }
+    
+    .testimonial-section .source {
+        font-size: 0.9em; 
+        margin-top: 10px;
+    }
+
+    .testimonial-dots {
+        bottom: 5px; 
+    }
+
+    /* --- TO DO PAGE --- */
+
+    .todo_list {
+        padding: 20px 15px;
+    }
+    
+    .todo_list h2 {
+        font-size: 1.3em;
+    }
+
+    .inputTask input {
+        font-size: 14px;
+        padding: 10px 20px;
+        width: 100%;
+    }
+
+    .inputTask button {
+        padding: 12px 30px;
+        font-size: 14px;
+    }
+
+    .list li {
+        font-size: 15px;
+        /* Disables browser default touch behavior */
+        touch-action: none; 
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    /* Makes drag handle and delete icon visible for mobile interaction */
+    .list li .drag-handle {
+        opacity: 0.2;
+        visibility: visible;
+        left: -5px;
+        transform: translateX(0);
+    }
+
+    .list li .drag-handle:active {
+        opacity: 0.6;
+    }
+
+    .list li .delete-icon {
+        opacity: 1;
+        visibility: visible;
+        font-size: 18px;
+    }
+
+    /* --- JOURNAL PAGE --- */
+
+    #journal {
+        grid-template-columns: 1fr; /* Single column on small screens */
+        gap: 30px; 
+    }
+
+    /* --- MEDITATION PAGE --- */
+
+    /* Force stacking and remove alternating layout on small screens */
+    .meditation-container, 
+    .meditation-container:nth-child(odd) {
+        flex-direction: column; 
+        padding: 20px;
+    }
+
+    /* Video container full width on mobile */
+    .video-container {
+        flex: 1 1 100%;
+        width: 100%;
+        /* Maintains 16:9 aspect ratio for embedded video */
+        padding-bottom: 56.25%; 
+        margin-bottom: 15px;
+    }
+
+    .video-text {
+        flex: 1 1 100%;
+        padding: 0;
+        text-align: center;
+    }
+
+    .video-text h2 {
+        text-align: center;
+    }
+
+    /* --- BENEFITS PAGE --- */
+
+    /* Stack the text and list vertically */
     .benefit-content, 
     .benefit-content.reverse-layout {
-        flex-direction: column; /* Stack the text and list vertically */
+        flex-direction: column; 
     }
 
     .benefit-list {
@@ -1432,6 +1445,7 @@ li.checked::before {
         width: 100%;
     }
 
+    /* Call to Action Section */
     .call-to-action {
         padding: 30px 0;
     }
@@ -1445,10 +1459,9 @@ li.checked::before {
         margin: 0 auto 30px auto;
     }
 
-
+    /* Stack the triple columns inside the CTA */
     .call-to-action .triple {
         flex-direction: column;
         gap: 10px;
     }
-
 }

@@ -1,6 +1,6 @@
-// =================================================================
-// ===================== GLOBAL UTILITIES ==========================
-// =================================================================
+// ================================================================= //
+// ===================== GLOBAL UTILITIES ========================== //
+// ================================================================= //
 
 window.addEventListener('scroll', reveal);
 window.addEventListener('load', reveal);
@@ -26,7 +26,7 @@ function reveal() {
         else {
             reveals[i].classList.remove('active');
 
-            // 3. New Logic: Check if the element is above the viewport
+            // 3. Check if the element is above the viewport
             // This condition is true when the entire element is above the top edge of the window.
             if (elementBottom <= 100) {
                 reveals[i].classList.add('scrolled-past');
@@ -42,6 +42,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const slides = document.querySelectorAll('.testimonial-slide');
     const dots = document.querySelectorAll('.dot');
     const sliderContainer = document.querySelector('.testimonial-section'); 
+
+    if (!sliderContainer) {
+        return;
+    }
 
     if (slides && dots) {
 
@@ -109,7 +113,6 @@ document.addEventListener('DOMContentLoaded', function() {
             sliderContainer.addEventListener('touchstart', (e) => {
                 // Record the starting X position of the touch
                 touchStartX = e.touches[0].clientX;
-                console.log('Touch Start:', touchStartX);
             });
     
             sliderContainer.addEventListener('touchmove', (e) => {
@@ -122,9 +125,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
                 // Calculate the distance and direction
                 const distance = touchStartX - touchEndX;
-                console.log('Touch End:', touchEndX); // Log end position
-                console.log('Calculated Distance:', distance); // Log final distance
-                console.log('Swipe Successful:', Math.abs(distance) > minSwipeDistance);
     
                 if (Math.abs(distance) > minSwipeDistance) {
                     // It's a valid swipe
@@ -142,7 +142,6 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
     
-    
         // Initialize the slider (show the first slide)
         showSlide(0);
     }
@@ -150,7 +149,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 document.addEventListener('DOMContentLoaded', () => {
     const menuToggle = document.querySelector('.menu-toggle');
-    const nav = document.querySelector('#header-nav'); // Use the new ID from step 1
+    const nav = document.querySelector('#header-nav');
 
     if (menuToggle && nav) {
         menuToggle.addEventListener('click', () => {
@@ -239,52 +238,88 @@ let draggedItem = null;
 // --- Drag and Drop Handlers---
 
 function handleDragStart(e) {
-    draggedItem = this;
+    // 'this' is the LI element
+    draggedItem = this; 
     e.dataTransfer.effectAllowed = 'move';
     setTimeout(() => this.classList.add('dragging'), 0);
+    
+    e.stopPropagation(); // Stop propagation just in case
 }
 
 function handleDragEnd(e) {
+    // Removes the CSS class that visually indicates dragging.
     this.classList.remove('dragging');
+    
+    // Clears the global reference to the dragged item.
     draggedItem = null;
+    
+    // Saves the updated task order/state.
     saveTaskData();
 }
 
+/**
+ * Executes continually while dragging over a target.
+ * Required to allow dropping on the target.
+ */
 function handleDragOver(e) {
+    // Prevents default browser drop behavior.
     e.preventDefault();
+    
+    // Sets the cursor to the 'move' icon.
     e.dataTransfer.dropEffect = 'move';
 }
 
+/**
+ * Executes when a dragged element first enters a drop target.
+ * Adds the drop zone visual indicator.
+ */
 function handleDragEnter(e) {
+    // Adds the 'drag-over' class (the visual drop zone highlight).
     this.classList.add('drag-over');
 }
 
+/**
+ * Executes when the dragged element leaves a drop target.
+ * Prevents the drop indicator from flickering when moving over child elements.
+ */
 function handleDragLeave(e) {
     const relatedTarget = e.relatedTarget;
 
+    // Only remove 'drag-over' if the cursor leaves the item AND its children.
     if (this !== relatedTarget && !this.contains(relatedTarget)) {
         this.classList.remove('drag-over');
     }
 }
 
+/**
+ * Executes when the dragged item is dropped onto a target.
+ * Handles the actual reordering of the DOM elements.
+ */
 function handleDrop(e) {
     e.preventDefault();
     this.classList.remove('drag-over');
 
     const targetItem = this;
 
+    // Check if we dropped onto a different item.
     if (draggedItem !== targetItem) {
         const list = document.querySelector('.list');
         const items = Array.from(list.querySelectorAll('li'));
         const draggedIndex = items.indexOf(draggedItem);
         const targetIndex = items.indexOf(targetItem);
 
+        // Logic to insert the item correctly:
         if (draggedIndex > targetIndex) {
+            // Dragging UP: Insert the dragged item before the target item.
             list.insertBefore(draggedItem, targetItem);
         } else {
+            // Dragging DOWN: Insert the dragged item after the target item.
+            // (Inserts before the target item's next sibling).
             list.insertBefore(draggedItem, targetItem.nextSibling);
         }
-        saveTaskData(); // Save after successful reorder
+        
+        // Save the new list order.
+        saveTaskData(); 
     }
 }
 
@@ -305,18 +340,25 @@ function createTaskElement(taskText) {
     let li = document.createElement('li');
     attachDragListeners(li); // Attach listeners here
 
-    let dragHandle = document.createElement('img');
-    dragHandle.src = "images/drag_handle.png";
-    dragHandle.alt = "Drag Handle";
-    dragHandle.classList.add('drag-handle'); 
+    // Add the drag handle
+    let dragHandle = document.createElement('span');
+    dragHandle.classList.add('drag-handle', 'material-symbols-outlined');
+    dragHandle.innerHTML = "drag_indicator" 
     li.appendChild(dragHandle);
     
+    // Add the checkbox
+    let check = document.createElement('span');
+    check.classList.add('material-symbols-outlined', 'checked');
+    check.innerHTML = "radio_button_unchecked";
+    li.appendChild(check);
+    
+    // Add the task text
     let taskTextDiv = document.createElement('div');
     taskTextDiv.classList.add('task-text');
     taskTextDiv.innerHTML = taskText;
     li.appendChild(taskTextDiv);
 
-
+    // Add the delete icon
     let span = document.createElement('span');
     span.classList.add('material-symbols-outlined', 'delete-icon');
     span.innerHTML = "close";
@@ -332,9 +374,12 @@ function addTask() {
     const newTaskInput = document.getElementById('newTask');
     const errorDisplay = document.getElementById('taskError');
 
+    // Check if the elements exist
     if (!list || !newTaskInput || !errorDisplay) return;
 
+    // Check if the input is empty
     if(newTaskInput.value.trim() === ''){
+        // Display error message with shake animation
         errorDisplay.textContent = 'Please enter a task.';
         errorDisplay.classList.add('shake-animation');
         setTimeout(() => {
@@ -343,11 +388,14 @@ function addTask() {
         return;
     }
     
+    // Create a new task element
     const newTaskElement = createTaskElement(newTaskInput.value);
     list.appendChild(newTaskElement);
     
+    // Clear the input field
     errorDisplay.textContent = '';
     newTaskInput.value = "";
+
     saveTaskData();
 }
 
@@ -357,21 +405,22 @@ document.addEventListener('DOMContentLoaded', function() {
     const list = document.querySelector('.list');
     const newTask = document.getElementById('newTask');
     
+    // Check if the elements exist
     if (list && newTask) {
         
-        // --- Revised showTasks function ---
         function showTasks(){
             // Load saved HTML string
             const savedData = localStorage.getItem("data") || '';
             list.innerHTML = savedData;
 
-            // CRITICAL STEP: Re-attach listeners to the loaded elements
+            // Re-attach listeners to the loaded elements
             const existingItems = list.querySelectorAll('li');
             existingItems.forEach(item => {
                 attachDragListeners(item);
             });
         }
         
+        // Function to save task by pressing the enter button
         newTask.addEventListener("keypress", function(event) {
             if (event.key === "Enter") {
                 event.preventDefault();
@@ -383,13 +432,24 @@ document.addEventListener('DOMContentLoaded', function() {
             let targetElement = e.target;
             let listItem = targetElement.closest('li');
             
-            if (targetElement.tagName === "LI" || targetElement.classList.contains('task-text')) {
+            // Logic for toggling the checkbox
+            if (targetElement.tagName === "SPAN" && targetElement.classList.contains('checked')) {
                 if (listItem) {
-                    listItem.classList.toggle("checked");
-                    saveTaskData();
+                    if (targetElement.innerHTML == "check_circle") {
+                        targetElement.innerHTML = "radio_button_unchecked";
+                        listItem.classList.toggle("checked");
+                        saveTaskData();
+                    }
+                    else if (targetElement.innerHTML == "radio_button_unchecked") {
+                        targetElement.innerHTML = "check_circle";
+                        listItem.classList.toggle("checked");
+                        saveTaskData();
+                    }
                 }
             }
-            else if(targetElement.tagName === "SPAN"){
+
+            // Logic for deleting a task
+            else if(targetElement.tagName === "SPAN" && targetElement.classList.contains('delete-icon')){
                 if (listItem) {
                     listItem.remove();
                     saveTaskData();
