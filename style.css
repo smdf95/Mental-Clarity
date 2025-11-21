@@ -1272,8 +1272,12 @@ li.checked .task-text {
     .home-container {
         flex-direction: column-reverse; 
         text-align: center;
-        margin-bottom: 0;
+        margin: 150px auto 0 auto;
         gap: 50px;
+    }
+
+    .home-intro h1, .home-intro p {
+        text-align: center;
     }
     
     .home-image {
